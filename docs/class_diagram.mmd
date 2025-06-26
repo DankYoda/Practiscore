@@ -2,7 +2,8 @@
 title: Praciscore
 ---
 classDiagram
-    User --> Club
+    User --> Club: managedClub
+    User --> Club: homeClub
     User --> "*" Sport: sports
     User --> "*" Division: division
     User --> "*" Sponsor
@@ -20,6 +21,8 @@ classDiagram
         instagramHandle: string
         bio: string
     }
+    Club --> "*" Match: matches
+    Club --> "*" Event: events
     class Club {
         website: string
         email: string
@@ -27,12 +30,13 @@ classDiagram
         socials: string
     }
     Match --> "*" Registration
+    Match --> MatchType: matchType
+    Match "*" --> Club
     class Match {
         address: string
         state: string
         city: string
         country: string
-        eventType: string
         startDate: DateTimeImmutable
         endDate: DateTimeImmutable
         description: string
@@ -44,18 +48,40 @@ classDiagram
     class Registration {
         division: string
         class: string
+        powerFactor: string
         memberNumber: string
         price: int
     }
 
     Event --> "*" Registration
+    Event "*" --> Club
     class Event {
         address: string
         state: string
         city: string
         country: string
-        matchType: string
+        eventType: string
     }
+
+    MatchType --> "*" Division: divisions
+    MatchType --> "*" Class: classes
+    MatchType --> "*" Category: categories
+    class MatchType {
+        name: string
+    }
+    Division "*" --> MatchType
+    class Division {
+        name: string
+    }
+    Class "*" --> MatchType
+    class Class {
+        name: string
+    }
+    Category "*" --> MatchType
+    class Category {
+        name: string
+    }
+
 
     Sponsor "*" --> User: sponsors
     class Sponsor {
@@ -69,7 +95,6 @@ classDiagram
     }
 
     class Category {
-        <<enumeration>>
         Junior: 0x1
         Senior: 0x2
         Super Senior: 0x3
@@ -82,10 +107,6 @@ classDiagram
         Junior: 0x10
         Senior: 0x11
         Lady: 0x12
-    }
-
-    class Division {
-        <<enumeration>>
     }
 
     Video "*" --> User: videos
