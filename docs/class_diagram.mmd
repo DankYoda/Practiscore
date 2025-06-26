@@ -1,0 +1,94 @@
+---
+title: Praciscore
+---
+classDiagram
+    User --> Club
+    User --> "*" Sport: sports
+    User --> "*" Division: division
+    User --> "*" Sponsor
+    User --> "*" Video
+    User --> "*" Registration
+    class User {
+        firstName: string
+        lastName: string
+        username: string
+        emailL: string
+        titles: string
+        guns: string
+        optics: string
+        ammo: string
+        instagramHandle: string
+        bio: string
+    }
+    class Club {
+        website: string
+        email: string
+        address: string
+        socials: string
+    }
+    Match --> "*" Registration
+    class Match {
+        address: string
+        state: string
+        city: string
+        country: string
+        eventType: string
+        startDate: DateTimeImmutable
+        endDate: DateTimeImmutable
+        description: string
+    }
+    Registration "*" --> User: user
+    Registration "*" --> Event: event
+    Registration "*" --> Match: match
+    Registration --> Category: categories
+    class Registration {
+        division: string
+        class: string
+        memberNumber: string
+        price: int
+    }
+
+    Event --> "*" Registration
+    class Event {
+        address: string
+        state: string
+        city: string
+        country: string
+        matchType: string
+    }
+
+    Sponsor "*" --> User: sponsors
+    class Sponsor {
+        name: string
+    }
+
+    class Sport {
+        <<enumeration>>
+        USPSA: "USPSA"
+        USPSA_MULTI_GUN: "USPSA MultiGun"
+    }
+
+    class Category {
+        <<enumeration>>
+        Junior: 0x1
+        Senior: 0x2
+        Super Senior: 0x3
+        Lady: 0x4
+        Law Enforcement: 0x5
+        Military: 0x6
+        Foreign: 0x7
+        Distinguished Participant: 0x8
+        Youth: 0x9
+        Junior: 0x10
+        Senior: 0x11
+        Lady: 0x12
+    }
+
+    class Division {
+        <<enumeration>>
+    }
+
+    Video "*" --> User: videos
+    class Video {
+        video: blob
+    }
