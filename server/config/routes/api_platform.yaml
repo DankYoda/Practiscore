@@ -1,0 +1,20 @@
+api_platform:
+    resource: .
+    type: api_platform
+    prefix: /
+    
+when@prod:
+    api_doc:
+        path: /api/docs
+        controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
+        defaults:
+            path: /
+            permanent: false
+            code: 404
+    swagger_ui:
+        path: /docs
+        controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
+        defaults:
+            path: /
+            permanent: false
+            code: 404
