@@ -14,7 +14,10 @@ class User implements UserInterface, PasswordUpgraderInterface
 {
     #[ORM\Id]
     #[ORM\Column(
-        length: 36
+        length: 36,
+        options: [
+		    'fixed' => true,
+		]
     )]
     private string $id {
         get => $this->id;
@@ -38,6 +41,7 @@ class User implements UserInterface, PasswordUpgraderInterface
     #[ORM\Column(
         unique: true,
     )]
+    #[Assert\Email]
     private string $email {
         get => $this->email;
     }
