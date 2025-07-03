@@ -6,14 +6,14 @@
     "require": {
         "php": ">=8.4",
         "ext-bcmath": "*",
-	"ext-ctype": "*",
-	"ext-dom": "*",
-	"ext-iconv": "*",
-	"ext-mbstring": "*",
-	"ext-pdo": "*",
-	"paragonie/paseto": "^3.2",
-	"nikic/iter": "^2.4",
-	"php-ds/php-ds": "^1.5",
+        "ext-ctype": "*",
+        "ext-dom": "*",
+        "ext-iconv": "*",
+        "ext-mbstring": "*",
+        "ext-pdo": "*",
+        "paragonie/paseto": "^3.2",
+        "nikic/iter": "^2.4",
+        "php-ds/php-ds": "^1.5",
         "api-platform/core": "^4.1.17",
         "doctrine/dbal": "^3.9.5",
         "doctrine/doctrine-bundle": "^2.15",
@@ -23,7 +23,6 @@
         "symfony/console": "7.3.*",
         "symfony/dotenv": "7.3.*",
         "symfony/expression-language": "7.3.*",
-        "symfony/flex": "^2.7.1",
         "symfony/form": "7.3.*",
         "symfony/framework-bundle": "7.3.*",
         "symfony/http-client": "7.3.*",
@@ -41,12 +40,10 @@
         "symfony/uid": "7.3.*",
         "symfony/validator": "7.3.*",
         "symfony/yaml": "7.3.*",
-        "twig/extra-bundle": "^2.12|^3.21",
-        "twig/twig": "^2.12|^3.21.1"
+        "twig/extra-bundle": "^2.12|^3.21"
     },
     "config": {
         "allow-plugins": {
-            "symfony/flex": true,
             "symfony/runtime": true
         },
 	"optimize-autoloader": true,
@@ -76,14 +73,14 @@
     },
     "scripts": {
 	"auto-scripts": [
-		"@php bin/console cache:clear",
-		"@php bin/console assets:install"
-	],
+            "@php bin/console cache:clear",
+            "@php bin/console assets:install"
+        ],
 	"post-install-cmd": [
-		"@auto-scripts"
+		    "@auto-scripts"
 	],
 	"post-update-cmd": [
-		"@auto-scripts"
-	]
-    },
+		    "@auto-scripts"
+        ]
+    }
 }
