@@ -65,17 +65,17 @@ classDiagram
     }
 
     MatchType --> "*" Division: divisions
-    MatchType --> "*" Class: classes
+    MatchType --> "*" Classification: classes
     MatchType --> "*" Category: categories
     class MatchType {
         name: string
     }
-    Division "*" --> MatchType
+    Division "*" --> MatchType: matchType
     class Division {
         name: string
     }
-    Class "*" --> MatchType
-    class Class {
+    Classification "*" --> MatchType: matchType
+    class Classification {
         name: string
     }
     Category "*" --> MatchType
