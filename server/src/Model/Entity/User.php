@@ -24,7 +24,8 @@ use Symfony\Component\Validator\Constraints as Assert;
     normalizationContext: ['groups' => ['default:read']],
 )]
 #[GetCollection(
-    uriTemplate: '/user'
+    uriTemplate: '/user',
+	normalizationContext: ['groups' => ['default:read']],
 )]
 class User implements UserInterface, PasswordUpgraderInterface
 {
@@ -41,29 +42,38 @@ class User implements UserInterface, PasswordUpgraderInterface
     #[Groups(['default:read'])]
     private string $firstName = '';
     #[ORM\Column]
+    #[Groups(['default:read'])]
     private string $lastName = '';
     #[ORM\Column(
         unique: true,
     )]
+    #[Groups(['default:read'])]
     private string $username;
     #[ORM\Column(
         unique: true,
     )]
+    #[Groups(['default:read'])]
     #[Assert\Email]
     private string $email;
     #[ORM\Column]
     private string $password = '';
     #[ORM\Column]
+    #[Groups(['default:read'])]
     private string $titles;
     #[ORM\Column]
+    #[Groups(['default:read'])]
     private string $guns = '';
     #[ORM\Column]
+    #[Groups(['default:read'])]
     private string $optics = '';
     #[ORM\Column]
+    #[Groups(['default:read'])]
     private string $ammo = '';
     #[ORM\Column]
+    #[Groups(['default:read'])]
     private string $instagramHandle = '';
     #[ORM\Column]
+    #[Groups(['default:read'])]
     private string $bio = '';
 
     public function __construct(
@@ -79,7 +89,7 @@ class User implements UserInterface, PasswordUpgraderInterface
     {
         // TODO: Implement upgradePassword() method.
     }
-
+	#[Groups(['default:read'])]
     public function getRoles(): array
     {
         // TODO: Implement getRoles() method.

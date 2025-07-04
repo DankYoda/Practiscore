@@ -1,3 +1,5 @@
 ###GET Users
+# @timeout 600ms
+
 GET http://localhost:8000/public/index.php/user
 Accept: application/ld+json
