@@ -3,3 +3,9 @@
 
 GET http://localhost:8000/public/index.php/user
 Accept: application/ld+json
+
+
+###GET MatchTypes
+# @timeout 600ms
+GET http://localhost:8000/public/index.php/match_type
+Accept: application/ld+json

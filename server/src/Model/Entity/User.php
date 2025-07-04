@@ -21,11 +21,11 @@ use Symfony\Component\Validator\Constraints as Assert;
     uriVariables: [
         'id' => new Link(fromClass: User::class),
     ],
-    normalizationContext: ['groups' => ['default:read']],
+    normalizationContext: ['groups' => ['user:default:read']],
 )]
 #[GetCollection(
     uriTemplate: '/user',
-	normalizationContext: ['groups' => ['default:read']],
+	normalizationContext: ['groups' => ['user:default:read']],
 )]
 class User implements UserInterface, PasswordUpgraderInterface
 {
@@ -36,44 +36,44 @@ class User implements UserInterface, PasswordUpgraderInterface
 		    'fixed' => true,
 		]
     )]
-    #[Groups(['default:read'])]
+    #[Groups(['user:default:read'])]
     private string $id;
     #[ORM\Column]
-    #[Groups(['default:read'])]
+    #[Groups(['user:default:read'])]
     private string $firstName = '';
     #[ORM\Column]
-    #[Groups(['default:read'])]
+    #[Groups(['user:default:read'])]
     private string $lastName = '';
     #[ORM\Column(
         unique: true,
     )]
-    #[Groups(['default:read'])]
+    #[Groups(['user:default:read'])]
     private string $username;
     #[ORM\Column(
         unique: true,
     )]
-    #[Groups(['default:read'])]
+    #[Groups(['user:default:read'])]
     #[Assert\Email]
     private string $email;
     #[ORM\Column]
     private string $password = '';
     #[ORM\Column]
-    #[Groups(['default:read'])]
+    #[Groups(['user:default:read'])]
     private string $titles;
     #[ORM\Column]
-    #[Groups(['default:read'])]
+    #[Groups(['user:default:read'])]
     private string $guns = '';
     #[ORM\Column]
-    #[Groups(['default:read'])]
+    #[Groups(['user:default:read'])]
     private string $optics = '';
     #[ORM\Column]
-    #[Groups(['default:read'])]
+    #[Groups(['user:default:read'])]
     private string $ammo = '';
     #[ORM\Column]
-    #[Groups(['default:read'])]
+    #[Groups(['user:default:read'])]
     private string $instagramHandle = '';
     #[ORM\Column]
-    #[Groups(['default:read'])]
+    #[Groups(['user:default:read'])]
     private string $bio = '';
 
     public function __construct(
@@ -89,7 +89,7 @@ class User implements UserInterface, PasswordUpgraderInterface
     {
         // TODO: Implement upgradePassword() method.
     }
-	#[Groups(['default:read'])]
+	#[Groups(['user:default:read'])]
     public function getRoles(): array
     {
         // TODO: Implement getRoles() method.
