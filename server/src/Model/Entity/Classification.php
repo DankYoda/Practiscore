@@ -4,15 +4,19 @@ declare(strict_types=1);
 namespace App\Model\Entity;
 
 use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Link;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(
 	readOnly: true,
 )]
-#[Get]
-#[GetCollection]
+#[Get(
+	uriTemplate: '/classification/{name}',
+	uriVariables: [
+		'name' => new Link(fromClass: Classification::class),
+	],
+)]
 class Classification {
 	#[ORM\Id]
 	#[ORM\Column]

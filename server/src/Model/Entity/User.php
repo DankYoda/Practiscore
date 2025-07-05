@@ -8,6 +8,8 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\OneToOne;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -78,6 +80,15 @@ class User implements UserInterface, PasswordUpgraderInterface
 	#[ORM\Column]
 	#[Groups(['user:default:read'])]
 	private int $admin = 0;
+	
+	#[OneToOne(targetEntity: Club::class)]
+	#[JoinColumn(name: 'id_home_club', referencedColumnName: 'id', nullable: true)]
+	#[Groups(['user:default:read'])]
+	private ?Club $homeClub = null;
+	#[OneToOne(targetEntity: Club::class)]
+	#[JoinColumn(name: 'id_managed_club', referencedColumnName: 'id', nullable: true)]
+	#[Groups(['user:default:read'])]
+	private ?Club $managedClub = null;
 
     public function __construct(
         string $username,
@@ -98,6 +109,8 @@ class User implements UserInterface, PasswordUpgraderInterface
         $roles = ['ROLE_USER'];
 		if ($this->admin)
 			$roles[] = 'ROLE_ADMIN';
+		if ($this->managedClub)
+			$roles[] = 'ROLE_MANAGED_CLUB';
         return $roles;
     }
 
@@ -229,5 +242,25 @@ class User implements UserInterface, PasswordUpgraderInterface
 	public function setAdmin(int $admin): void
 	{
 		$this->admin = $admin;
+	}
+	
+	public function getHomeClub(): ?Club
+	{
+		return $this->homeClub;
+	}
+	
+	public function setHomeClub(?Club $homeClub): void
+	{
+		$this->homeClub = $homeClub;
+	}
+	
+	public function getManagedClub(): ?Club
+	{
+		return $this->managedClub;
+	}
+	
+	public function setManagedClub(?Club $managedClub): void
+	{
+		$this->managedClub = $managedClub;
 	}
 }
