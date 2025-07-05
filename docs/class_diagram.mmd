@@ -4,9 +4,7 @@ title: Praciscore
 classDiagram
     User --> Club: managedClub
     User --> Club: homeClub
-    User --> "*" Sport: sports
-    User --> "*" Video
-    User --> "*" Registration
+    User --> "*" Registration: registrations
     class User {
         firstName: string
         lastName: string
@@ -19,11 +17,12 @@ classDiagram
         ammo: string
         sponsors: string
         divisions: string
+        sports: string
         instagramHandle: string
         bio: string
         admin: int
     }
-    Club --> "*" Gathering: gatherings
+
     class Club {
         website: string
         email: string
@@ -36,15 +35,13 @@ classDiagram
     class Registration {
         division: ?string
         classification: ?string
-        class: string
-        powerFactor: string
+        powerFactor: ?string
         memberNumber: string
-        price: int
         category: int
     }
 
-    Gathering --> "*" Registration
-    Gathering "*" --> Club
+    Gathering --> "*" Registration: registrations
+    Gathering "*" --> Club: club
     class Gathering {
         address: string
         state: string
@@ -58,6 +55,7 @@ classDiagram
         waiver: string
         eventType: ?string
         matchType: ?string
+        price: float
     }
     MatchType --> "*" Division: divisions
     MatchType --> "*" Classification: classes
@@ -79,12 +77,6 @@ classDiagram
         name: string
     }
 
-    class Sport {
-        <<enumeration>>
-        USPSA: "USPSA"
-        USPSA_MULTI_GUN: "USPSA MultiGun"
-    }
-
     class Category {
         <<enumeration>>
         Junior: 0x1
@@ -101,7 +93,8 @@ classDiagram
         Lady: 0x12
     }
 
-    Video "*" --> User: videos
+    Video "*" --> User: user
     class Video {
-        video: blob
+        name: string
+        data: blob
     }

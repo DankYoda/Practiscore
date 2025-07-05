@@ -37,7 +37,7 @@ class Club{
 		]
 	)]
 	#[Groups(['user:default:read'])]
-	private string $id;
+	private readonly string $id;
 	#[ORM\Column]
 	#[Groups(['user:default:read'])]
 	private string $name;

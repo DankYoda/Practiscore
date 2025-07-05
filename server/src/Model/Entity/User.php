@@ -7,6 +7,8 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
@@ -39,7 +41,7 @@ class User implements UserInterface, PasswordUpgraderInterface
 		]
     )]
     #[Groups(['user:default:read'])]
-    private string $id;
+    private readonly string $id;
     #[ORM\Column]
     #[Groups(['user:default:read'])]
     private string $firstName = '';
@@ -89,6 +91,10 @@ class User implements UserInterface, PasswordUpgraderInterface
 	#[JoinColumn(name: 'id_managed_club', referencedColumnName: 'id', nullable: true)]
 	#[Groups(['user:default:read'])]
 	private ?Club $managedClub = null;
+	
+	#[ORM\OneToMany(targetEntity: Registration::class, mappedBy: 'user')]
+	#[Groups(['user:default:read'])]
+	private Collection $registrations;
 
     public function __construct(
         string $username,
@@ -98,6 +104,7 @@ class User implements UserInterface, PasswordUpgraderInterface
         $this->id = Uuid::v4()->toRfc4122();
         $this->username = $username;
         $this->email = $email;
+		$this->registrations = new ArrayCollection();
     }
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
@@ -263,4 +270,10 @@ class User implements UserInterface, PasswordUpgraderInterface
 	{
 		$this->managedClub = $managedClub;
 	}
+	
+	public function getRegistrations(): Collection
+	{
+		return $this->registrations;
+	}
+	
 }
