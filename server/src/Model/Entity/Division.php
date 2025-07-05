@@ -6,6 +6,8 @@ namespace App\Model\Entity;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
+
 #[ORM\Entity(
 	readOnly: true,
 )]
@@ -14,6 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Division {
 	#[ORM\Id]
 	#[ORM\Column]
+	#[Groups(['match_type:default:read'])]
 	private string $name;
 	#[ORM\ManyToOne(targetEntity: MatchType::class, inversedBy: "divisions")]
 	#[ORM\JoinColumn(name: 'id_match_type', referencedColumnName: 'name')]

@@ -18,6 +18,9 @@ class Classification {
 	#[ORM\Column]
 	#[Groups(['match_type:default:read'])]
 	private string $name;
+	#[ORM\Column]
+	#[Groups(['match_type:default:read'])]
+	private int $ordinal = 0;
 	#[ORM\ManyToOne(targetEntity: MatchType::class, inversedBy: "classifications")]
 	#[ORM\JoinColumn(name: 'id_match_type', referencedColumnName: 'name')]
 	private MatchType $matchType;
@@ -43,5 +46,14 @@ class Classification {
 	public function getName(): string
 	{
 		return $this->name;
+	}
+	public function getOrdinal(): int
+	{
+		return $this->ordinal;
+	}
+	
+	public function setOrdinal(int $ordinal): void
+	{
+		$this->ordinal = $ordinal;
 	}
 }

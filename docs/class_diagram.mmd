@@ -13,7 +13,7 @@ classDiagram
         firstName: string
         lastName: string
         username: string
-        emailL: string
+        email: string
         password: string
         titles: string
         guns: string
@@ -21,6 +21,7 @@ classDiagram
         ammo: string
         instagramHandle: string
         bio: string
+        admin: int
     }
     Club --> "*" Match: matches
     Club --> "*" Event: events
@@ -77,8 +78,9 @@ classDiagram
     Classification "*" --> MatchType: matchType
     class Classification {
         name: string
+        ordinal: int
     }
-    Category "*" --> MatchType
+
     class Category {
         name: string
     }

@@ -75,6 +75,9 @@ class User implements UserInterface, PasswordUpgraderInterface
     #[ORM\Column]
     #[Groups(['user:default:read'])]
     private string $bio = '';
+	#[ORM\Column]
+	#[Groups(['user:default:read'])]
+	private int $admin = 0;
 
     public function __construct(
         string $username,
@@ -92,8 +95,10 @@ class User implements UserInterface, PasswordUpgraderInterface
 	#[Groups(['user:default:read'])]
     public function getRoles(): array
     {
-        // TODO: Implement getRoles() method.
-        return ['ROLE_USER'];
+        $roles = ['ROLE_USER'];
+		if ($this->admin)
+			$roles[] = 'ROLE_ADMIN';
+        return $roles;
     }
 
     public function eraseCredentials(): void
@@ -215,6 +220,14 @@ class User implements UserInterface, PasswordUpgraderInterface
 	{
 		$this->bio = $bio;
 	}
-
-
+	
+	public function isAdmin(): int
+	{
+		return $this->admin;
+	}
+	
+	public function setAdmin(int $admin): void
+	{
+		$this->admin = $admin;
+	}
 }
