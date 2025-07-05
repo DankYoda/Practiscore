@@ -110,7 +110,7 @@ class User implements UserInterface, PasswordUpgraderInterface
 		if ($this->admin)
 			$roles[] = 'ROLE_ADMIN';
 		if ($this->managedClub)
-			$roles[] = 'ROLE_MANAGED_CLUB';
+			$roles[] = 'ROLE_MANAGER';
         return $roles;
     }
 
