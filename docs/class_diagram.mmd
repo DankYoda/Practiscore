@@ -5,8 +5,6 @@ classDiagram
     User --> Club: managedClub
     User --> Club: homeClub
     User --> "*" Sport: sports
-    User --> "*" Division: division
-    User --> "*" Sponsor
     User --> "*" Video
     User --> "*" Registration
     class User {
@@ -19,35 +17,25 @@ classDiagram
         guns: string
         optics: string
         ammo: string
+        sponsors: string
+        divisions: string
         instagramHandle: string
         bio: string
         admin: int
     }
-    Club --> "*" Match: matches
-    Club --> "*" Event: events
+    Club --> "*" Gathering: gatherings
     class Club {
         website: string
         email: string
         address: string
         socials: string
     }
-    Match --> "*" Registration
-    Match --> MatchType: matchType
-    Match "*" --> Club
-    class Match {
-        address: string
-        state: string
-        city: string
-        country: string
-        startDate: DateTimeImmutable
-        endDate: DateTimeImmutable
-        description: string
-    }
+
     Registration "*" --> User: user
-    Registration "*" --> Event: event
-    Registration "*" --> Match: match
+    Registration "*" --> Gathering: gathering
     class Registration {
-        division: string
+        division: ?string
+        classification: ?string
         class: string
         powerFactor: string
         memberNumber: string
@@ -55,16 +43,22 @@ classDiagram
         category: int
     }
 
-    Event --> "*" Registration
-    Event "*" --> Club
-    class Event {
+    Gathering --> "*" Registration
+    Gathering "*" --> Club
+    class Gathering {
         address: string
         state: string
         city: string
         country: string
-        eventType: string
+        description: string
+        openDate: DateTimeImmutable
+        closeDate: DateTimeImmutable
+        startDate: DateTimeImmutable
+        endDate: DateTimeImmutable
+        waiver: string
+        eventType: ?string
+        matchType: ?string
     }
-
     MatchType --> "*" Division: divisions
     MatchType --> "*" Classification: classes
     MatchType --> "*" Category: categories
@@ -82,12 +76,6 @@ classDiagram
     }
 
     class Category {
-        name: string
-    }
-
-
-    Sponsor "*" --> User: sponsors
-    class Sponsor {
         name: string
     }
 
