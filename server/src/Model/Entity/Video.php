@@ -7,6 +7,7 @@ use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
@@ -21,10 +22,16 @@ use Symfony\Component\Uid\Uuid;
 	],
 )]
 #[GetCollection(
-	uriTemplate: '/video/{id}',
+	uriTemplate: '/video',
 )]
 #[Post(
 	uriTemplate: '/video',
+)]
+#[Patch(
+	uriTemplate: '/video/{id}',
+	uriVariables: [
+		'id' => new Link(fromClass: Video::class),
+	],
 )]
 #[Delete(
 	uriTemplate: '/video/{id}',

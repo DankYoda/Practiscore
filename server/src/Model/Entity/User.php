@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -31,7 +32,16 @@ use Symfony\Component\Validator\Constraints as Assert;
     uriTemplate: '/user',
 	normalizationContext: ['groups' => ['user:default:read']],
 )]
-class User implements UserInterface, PasswordUpgraderInterface
+#[Post(
+	uriTemplate: '/user',
+)]
+#[Patch(
+	uriTemplate: '/user/{id}',
+	uriVariables: [
+		'id' => new Link(fromClass: User::class),
+	],
+)]
+class User implements UserInterface, PasswordUpgraderInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\Column(
