@@ -4,20 +4,26 @@ security:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-        user:
+        users:
             entity:
                 class: App\Model\Entity\User
                 property: username
     firewalls:
         login:
             pattern: '^/login'
-            provider: user
+            stateless: true
+            provider: users
+            login_throttling:
+                max_attempts: 10
             json_login:
                 check_path: api_login
         api:
-            pattern: '^/'
-            lazy: true
-            provider: user
+            pattern: ^/
+            stateless: true
+            provider: users
+            access_token:
+                token_extractors: App\Service\Authentication\TokenExtractor
+                token_handler: App\Service\Authentication\TokenHandler
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
