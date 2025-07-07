@@ -8,11 +8,21 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use App\Model\PasswordChangeInput;
+use App\Model\PasswordResetInput;
+use App\Model\UserRegistration;
+use App\Service\State\Processor\User\ChangePasswordProcessor;
+use App\Service\State\Processor\User\PasswordResetProcessor;
+use App\Service\State\Processor\User\SendResetPasswordProcessor;
+use App\Service\State\Processor\User\UserRegisterProcessor;
+use App\Service\State\Provider\User\SendPasswordResetProvider;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -47,10 +57,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 	uriVariables: [
 	    'userId' => new Link(fromClass: User::class)
 	],
-	openapiContext: [
-		'summary' => 'Changed email and sends verification email',
-		'description' => 'Changed email and sends verification email',
-	],
 	security: "is_granted('ROLE_ADMIN') or object === user",
 	input: EmailChangeInput::class,
 	processor: UserChangeEmailProcessor::class,
@@ -60,10 +66,6 @@ use Symfony\Component\Validator\Constraints as Assert;
     uriVariables: [
         'userId' => new Link(fromClass: User::class),
     ],
-	openapiContext: [
-		'summary' => 'Verifies the users email',
-		'description' => 'Verifies the users email',
-	],
     deserialize: false,
     processor: UserVerifyProcessor::class
 )]
@@ -73,10 +75,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 		'userId' => new Link(fromClass: User::class),
 	],
 	status: Response::HTTP_NO_CONTENT,
-	openapiContext: [
-		'summary' => 'Resends the email verification token',
-		'description' => 'Resends the email verification token',
-	],
 	deserialize: false,
 	processor: ResendVerifyEmailProcessor::class
 
@@ -85,10 +83,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 	uriTemplate: '/user/{userId}/password/change',
 	uriVariables: [
 		'userId' => new Link(fromClass: User::class),
-	],
-	openapiContext: [
-		'summary' => 'Changes the password for User',
-		'description' => 'Changes the password for User',
 	],
 	security: "is_granted('ROLE_ADMIN') or object === user",
 	input: PasswordChangeInput::class,
@@ -100,13 +94,6 @@ use Symfony\Component\Validator\Constraints as Assert;
         'email' => new Link(fromClass: User::class),
     ],
     status: Response::HTTP_NO_CONTENT,
-    openapiContext: [
-        'summary' => 'Sends a password reset email to the requested email',
-        'description' => 'Sends a password reset email to the requested email',
-        'responses' => [
-            '204' => ['description' => 'Password Reset Email Sent']
-        ]
-    ],
     deserialize: false,
     provider: SendPasswordResetProvider::class,
     processor: SendResetPasswordProcessor::class
@@ -116,13 +103,6 @@ use Symfony\Component\Validator\Constraints as Assert;
     uriVariables: [
         'userId' => new Link(fromClass: User::class),
     ],
-	openapiContext: [
-		'summary' => 'Sets the password',
-		'description' => 'Sets the password',
-		'responses' => [
-			'422' => ['description' => 'Token invalid']
-		]
-	],
 	input: PasswordResetInput::class,
 	processor: PasswordResetProcessor::class
 )]
