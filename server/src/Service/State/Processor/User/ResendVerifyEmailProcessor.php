@@ -9,11 +9,11 @@ use App\Repository\UserRepository;
 use App\Service\EmailVerifier;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 
-class ResendVerifyEmailProcessor implements ProcessorInterface
+readonly class ResendVerifyEmailProcessor implements ProcessorInterface
 {
 	function __construct(
-		private readonly UserRepository $userRepository,
-		private readonly EmailVerifier $emailVerifier,
+		private UserRepository $userRepository,
+		private EmailVerifier  $emailVerifier,
 	)
 	{
 

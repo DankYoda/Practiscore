@@ -11,12 +11,12 @@ use App\Service\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
-class UserChangeEmailProcessor implements ProcessorInterface
+readonly class UserChangeEmailProcessor implements ProcessorInterface
 {
 	function __construct(
-		private readonly EmailVerifier $emailVerifier,
-		private readonly EntityManagerInterface $entityManager,
-        private readonly UserRepository $userRepository
+		private EmailVerifier          $emailVerifier,
+		private EntityManagerInterface $entityManager,
+        private UserRepository         $userRepository
 	)
 	{
 	}

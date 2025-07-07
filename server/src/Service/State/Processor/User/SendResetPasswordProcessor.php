@@ -5,13 +5,11 @@ namespace App\Service\State\Processor\User;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use App\Repository\UserRepository;
 use App\Service\PasswordSetter;
 
 readonly class SendResetPasswordProcessor implements ProcessorInterface
 {
 	public function __construct(
-		private UserRepository $userRepository,
         private PasswordSetter $passwordSetter
 	) {}
 
