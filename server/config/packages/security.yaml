@@ -10,13 +10,18 @@ security:
                 property: username
     firewalls:
         login:
-            pattern: '^/login'
+            pattern: '^/login$'
+            methods: [PUT]
             stateless: true
             provider: users
             login_throttling:
                 max_attempts: 10
             json_login:
-                check_path: api_login
+                check_path: login
+                username_path: username
+                password_path: password
+                success_handler: App\Service\Security\Authentication\AuthenticationSuccessHandler
+                failure_handler: App\Service\Security\Authentication\AuthenticationFailureHandler
         api:
             pattern: ^/
             stateless: true
