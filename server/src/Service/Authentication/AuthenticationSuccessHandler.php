@@ -3,16 +3,23 @@ declare(strict_types=1);
 
 namespace App\Service\Authentication;
 
+use App\Service\Cookie\CookieToken;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 
-class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterface
+readonly class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterface
 {
-	
-	public function onAuthenticationSuccess(Request $request, TokenInterface $token): ?Response
+	function __construct(
+		private CookieToken $cookieToken,
+	)
 	{
-		// TODO: Implement onAuthenticationSuccess() method.
+		
+	}
+
+	public function onAuthenticationSuccess(Request $request, TokenInterface $token): Response
+	{
+		return $this->cookieToken->cookieTokenCreate($token);
 	}
 }
