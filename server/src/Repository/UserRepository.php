@@ -5,12 +5,15 @@ namespace App\Repository;
 
 use App\Model\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserRepository extends ServiceEntityRepository implements UserLoaderInterface {
-	public function __construct(ManagerRegistry $registry) {
+	public function __construct(
+		ManagerRegistry $registry,
+	) {
 		parent::__construct($registry, User::class);
 	}
 
@@ -32,5 +35,9 @@ class UserRepository extends ServiceEntityRepository implements UserLoaderInterf
 		)
 			->setParameter('query', $identifier)
 			->getOneOrNullResult();
+	}
+	
+	public function flush(): void {
+		$this->getEntityManager()->flush();
 	}
 }

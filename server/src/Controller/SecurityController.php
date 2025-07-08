@@ -21,8 +21,7 @@ class SecurityController
 	public function index(): Response
 	{
 		return new JsonResponse([
-			'message' => 'Welcome to your new controller!',
-			'path' => 'src/Controller/ApiLoginController.php',
+			'message' => 'Login Successful',
 		]);
 	}
 	#[Route('/logout', name: 'app_logout', methods: ['POST'])]
