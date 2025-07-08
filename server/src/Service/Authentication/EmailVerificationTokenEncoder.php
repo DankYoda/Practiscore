@@ -2,7 +2,21 @@
 
 namespace App\Service\Authentication;
 
-readonly class ResetPasswordTokenEncoder
+use App\Exception\Resource\TokenExpired;
+use App\Exception\Resource\TokenInvalid;
+use App\Model\Entity\User;
+use App\Repository\UserRepository;
+use DateInterval;
+use ParagonIE\Paseto\Builder;
+use ParagonIE\Paseto\Exception\PasetoException;
+use ParagonIE\Paseto\Keys\SymmetricKey;
+use ParagonIE\Paseto\Protocol\Version3;
+use ParagonIE\Paseto\Purpose;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Clock\ClockInterface;
+use UnexpectedValueException;
+
+readonly class EmailVerificationTokenEncoder
 {
 	function __construct(
 		private string $password,
@@ -34,12 +48,15 @@ readonly class ResetPasswordTokenEncoder
                 throw new TokenExpired();
             }
 
-            if ($parsedToken->get('type') !== 'password')
+            if ($parsedToken->get('type') !== 'email')
                 throw new TokenInvalid();
+
+            if (strtolower($parsedToken->get('email')) !== strtolower($user->getEmail()))
+                throw new TokenInvalid();
+
         } catch (PasetoException) {
             throw new TokenInvalid();
         }
-
         return $user;
 	}
 
@@ -51,8 +68,9 @@ readonly class ResetPasswordTokenEncoder
             ->setVersion(new Version3())
             ->setPurpose(Purpose::local())
             ->setClaims([
-                'type'=>'password',
-                'user'=>$user->getId()
+                'type'=>'email',
+                'user'=>$user->getId(),
+                'email'=>$user->getEmail()
             ])
             ->setNotBefore($this->clock->now())
             ->setExpiration($this->clock->now()->add(new DateInterval('PT10M')))
