@@ -5,8 +5,8 @@ namespace App\Service;
 
 //use App\Exception\Resource\TokenInvalid;
 use App\Model\Entity\User;
-//use App\Service\Security\EmailVerificationTokenEncoder;
-//use App\Service\UrlGenerator\VerificationUrlGenerator;
+use App\Service\Authentication\EmailVerificationTokenEncoder;
+use App\Service\UrlGenerator\VerificationUrlGenerator;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
@@ -14,8 +14,8 @@ readonly class EmailVerifier {
 	function __construct(
 		private MailerInterface $mailer,
 		private string $fromEmail,
-		//private EmailVerificationTokenEncoder $tokenEncoder,
-		//private VerificationUrlGenerator $verificationUrlGenerator,
+		private EmailVerificationTokenEncoder $tokenEncoder,
+		private VerificationUrlGenerator $verificationUrlGenerator,
 	)
 	{
 

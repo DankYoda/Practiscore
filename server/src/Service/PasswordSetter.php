@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Model\Entity\User;
+use App\Service\Authentication\ResetPasswordTokenEncoder;
 use Symfony\Component\Clock\ClockInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
@@ -13,10 +14,10 @@ readonly class PasswordSetter {
 	function __construct(
 		private MailerInterface $mailer,
 		private string $fromEmail,
-		/*private ResetPasswordTokenEncoder $tokenEncoder,
+		private ResetPasswordTokenEncoder $tokenEncoder,
 		private ResetUrlGenerator $resetUrlGenerator,
         private UserPasswordHasherInterface $passwordHasher,
-        private ClockInterface $clock*/
+        private ClockInterface $clock
 	)
 	{
 
