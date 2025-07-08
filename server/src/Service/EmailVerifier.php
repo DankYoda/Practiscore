@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Exception\Resource\TokenInvalid;
+//use App\Exception\Resource\TokenInvalid;
 use App\Model\Entity\User;
-use App\Service\Security\EmailVerificationTokenEncoder;
-use App\Service\UrlGenerator\VerificationUrlGenerator;
+//use App\Service\Security\EmailVerificationTokenEncoder;
+//use App\Service\UrlGenerator\VerificationUrlGenerator;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
@@ -14,8 +14,8 @@ readonly class EmailVerifier {
 	function __construct(
 		private MailerInterface $mailer,
 		private string $fromEmail,
-		private EmailVerificationTokenEncoder $tokenEncoder,
-		private VerificationUrlGenerator $verificationUrlGenerator,
+		//private EmailVerificationTokenEncoder $tokenEncoder,
+		//private VerificationUrlGenerator $verificationUrlGenerator,
 	)
 	{
 
@@ -23,7 +23,7 @@ readonly class EmailVerifier {
 
 	public function sendEmail(User $user): void {
         //TODO fix email message
-        $token = $this->tokenEncoder->create($user);
+        /*$token = $this->tokenEncoder->create($user);
 		$url = $this->verificationUrlGenerator->generate()->expand(['userId' => $user->getId(), 'token' => $token]);
 		$email = (new Email())
 			->from($this->fromEmail)
@@ -38,14 +38,14 @@ readonly class EmailVerifier {
         <p><a href='{$url}' target='blank'>Click here to confirm your email</a></p>
     </body>
 </html>");
-		$this->mailer->send($email);
+		$this->mailer->send($email);*/
 	}
 
 	public function verify(User $user, string $token): void {
-		$tokenUser = $this->tokenEncoder->verify($token);
+		$tokenUser = $token;//$this->tokenEncoder->verify($token);
 
         if ($tokenUser->getId() !== $user->getId())
-            throw new TokenInvalid();
+            //throw new TokenInvalid();
 
         $tokenUser->setEmailVerified(true);
 	}

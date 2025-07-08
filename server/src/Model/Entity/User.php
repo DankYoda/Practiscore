@@ -112,6 +112,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 )]
 #[Post(
 	uriTemplate: '/user/register',
+	status: Response::HTTP_CREATED,
 	denormalizationContext: [
 		'groups' => ['user:post:write:register']
 	],
@@ -130,41 +131,71 @@ class User implements UserInterface, PasswordUpgraderInterface, PasswordAuthenti
     #[Groups(['user:default:read'])]
     private readonly string $id;
     #[ORM\Column]
-    #[Groups(['user:default:read'])]
+    #[Groups([
+		'user:default:read',
+	    'user:post:write:register',
+    ])]
     private string $firstName = '';
     #[ORM\Column]
-    #[Groups(['user:default:read'])]
+    #[Groups([
+		'user:default:read',
+	    'user:post:write:register',
+    ])]
     private string $lastName = '';
     #[ORM\Column(
         unique: true,
     )]
-    #[Groups(['user:default:read'])]
+    #[Groups([
+		'user:default:read',
+		'user:post:write:register',
+    ])]
     private string $username;
     #[ORM\Column(
         unique: true,
     )]
-    #[Groups(['user:default:read'])]
+    #[Groups([
+		'user:default:read',
+	    'user:post:write:register',
+    ])]
     #[Assert\Email]
     private string $email;
     #[ORM\Column]
     private string $password = '';
     #[ORM\Column]
-    #[Groups(['user:default:read'])]
+    #[Groups([
+		'user:default:read',
+	    'user:post:write:register',
+    ])]
     private string $titles;
     #[ORM\Column]
-    #[Groups(['user:default:read'])]
+    #[Groups([
+		'user:default:read',
+	    'user:post:write:register',
+    ])]
     private string $guns = '';
     #[ORM\Column]
-    #[Groups(['user:default:read'])]
+    #[Groups([
+		'user:default:read',
+	    'user:post:write:register',
+    ])]
     private string $optics = '';
     #[ORM\Column]
-    #[Groups(['user:default:read'])]
+    #[Groups([
+		'user:default:read',
+	    'user:post:write:register',
+    ])]
     private string $ammo = '';
     #[ORM\Column]
-    #[Groups(['user:default:read'])]
+    #[Groups([
+		'user:default:read',
+	    'user:post:write:register',
+    ])]
     private string $instagramHandle = '';
     #[ORM\Column]
-    #[Groups(['user:default:read'])]
+    #[Groups([
+		'user:default:read',
+	    'user:post:write:register',
+    ])]
     private string $bio = '';
 	#[ORM\Column]
 	#[Groups(['user:default:read'])]

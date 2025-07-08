@@ -11,7 +11,7 @@ security:
     firewalls:
         login:
             pattern: '^/login$'
-            methods: [PUT]
+            methods: [POST]
             stateless: true
             provider: users
             login_throttling:
@@ -20,8 +20,8 @@ security:
                 check_path: login
                 username_path: username
                 password_path: password
-                success_handler: App\Service\Security\Authentication\AuthenticationSuccessHandler
-                failure_handler: App\Service\Security\Authentication\AuthenticationFailureHandler
+                success_handler: App\Service\Authentication\AuthenticationSuccessHandler
+                failure_handler: App\Service\Authentication\AuthenticationFailureHandler
         api:
             pattern: ^/
             stateless: true

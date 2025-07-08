@@ -1,8 +1,41 @@
+###Login
+# @timeout 600 m
+POST http://localhost:8000/public/index.php/login
+Accept: application/ld+json
+Content-Type: application/ld+json
+
+{
+  "username": "DankYoda",
+  "password": "Armando1234567890"
+}
+
 ###GET Users
 # @timeout 600 m
 
 GET http://localhost:8000/public/index.php/user
 Accept: application/ld+json
+
+###Create User
+# @timeout 600 m
+POST http://localhost:8000/public/index.php/user/register
+Accept: application/ld+json
+Content-Type: application/ld+json
+
+{
+  "user": {
+    "username" : "DankYoda",
+	"firstName": "Dank",
+	"lastName": "Yoda",
+    "email" : "dank@gmail.com",
+    "titles" : "",
+    "guns" : "",
+    "optics" : "",
+    "ammo" : "",
+    "instagramHandle" : "",
+    "bio" : ""
+  },
+  "plainPassword": "Armando1234567890"
+}
 
 
 ###GET MatchTypes

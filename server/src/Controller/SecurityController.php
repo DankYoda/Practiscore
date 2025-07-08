@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Service\Cookie\CookieToken;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,7 +17,14 @@ class SecurityController
 	)
 	{
 	}
-	
+	#[Route('/login', name: 'login')]
+	public function index(): Response
+	{
+		return new JsonResponse([
+			'message' => 'Welcome to your new controller!',
+			'path' => 'src/Controller/ApiLoginController.php',
+		]);
+	}
 	#[Route('/logout', name: 'app_logout', methods: ['POST'])]
 	public function logout(): Response
 	{

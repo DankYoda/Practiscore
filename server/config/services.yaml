@@ -16,7 +16,7 @@ services:
     App\:
         resource: '../src/'
 
-   App\Service\Authentication\TokenHandler:
+    App\Service\Authentication\TokenHandler:
         arguments:
             $password: "%env(TOKEN_PASSWORD)%"
 
@@ -28,3 +28,10 @@ services:
     App\Service\Authentication\TokenExtractor:
         arguments:
             $appIdentifier: "%app_identifier%"
+
+    App\Service\EmailVerifier:
+        arguments:
+            $fromEmail: "dank@example.com"
+    App\Service\PasswordSetter:
+        arguments:
+            $fromEmail: "dank@example.com"

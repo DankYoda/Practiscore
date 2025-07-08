@@ -5,9 +5,7 @@ namespace App\Service\State\Processor\User;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use App\Exception\Resource\TokenInvalid;
 use App\Service\EmailVerifier;
-use App\Service\TokenFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,14 +17,13 @@ readonly class UserVerifyProcessor implements ProcessorInterface
 		private EntityManagerInterface $entityManager,
 		private RequestStack $requestStack,
 		private EmailVerifier $emailVerifier,
-        private TokenFactory $tokenFactory
 	) {}
 
 	public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []) {
         $this->emailVerifier->verify($data, $this->readToken());
         $this->entityManager->persist($data);
         $this->entityManager->flush();
-        return $this->tokenFactory->create($data);
+        return null;
 	}
 
     private function readToken(): string {
@@ -36,7 +33,7 @@ readonly class UserVerifyProcessor implements ProcessorInterface
 
         $authorization = explode(' ', $authorization);
 
-        if (count($authorization) < 2 || $authorization[0] !== 'Bearer') throw new TokenInvalid();
+        //if (count($authorization) < 2 || $authorization[0] !== 'Bearer') throw new TokenInvalid();
         return $authorization[1];
     }
 }

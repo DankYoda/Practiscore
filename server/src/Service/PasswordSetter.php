@@ -3,11 +3,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use ApiPlatform\Exception\InvalidValueException;
-use App\Exception\Resource\TokenInvalid;
 use App\Model\Entity\User;
-use App\Service\Security\ResetPasswordTokenEncoder;
-use App\Service\UrlGenerator\ResetUrlGenerator;
 use Symfony\Component\Clock\ClockInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
@@ -17,17 +13,17 @@ readonly class PasswordSetter {
 	function __construct(
 		private MailerInterface $mailer,
 		private string $fromEmail,
-		private ResetPasswordTokenEncoder $tokenEncoder,
+		/*private ResetPasswordTokenEncoder $tokenEncoder,
 		private ResetUrlGenerator $resetUrlGenerator,
         private UserPasswordHasherInterface $passwordHasher,
-        private ClockInterface $clock
+        private ClockInterface $clock*/
 	)
 	{
 
 	}
 	public function sendEmail(User $user): void {
         //TODO fix email message
-        $token = $this->tokenEncoder->create($user);
+/*        $token = $this->tokenEncoder->create($user);
 		$url = $this->resetUrlGenerator->generate()->expand(['userId' => $user->getId(), 'token' => $token]);
 		$email = (new Email())
 			->from($this->fromEmail)
@@ -43,11 +39,11 @@ readonly class PasswordSetter {
         <p>If you didn't request a reset, you can safely ignore this email.</p>
     </body>
 </html>");
-		$this->mailer->send($email);
+		$this->mailer->send($email);*/
 	}
 
 	public function reset(User $user, string $token, string $newPassword): void {
-        $tokenUser = $this->tokenEncoder->verify($token);
+        /*$tokenUser = $this->tokenEncoder->verify($token);
 
         if ($tokenUser->getId() !== $user->getId())
             throw new TokenInvalid();
@@ -56,6 +52,6 @@ readonly class PasswordSetter {
             throw new InvalidValueException('New Password cannot be old password');
 
         $user->setPassword($this->passwordHasher->hashPassword($user, $newPassword));
-        $user->setPasswordChanged($this->clock->now());
+        $user->setPasswordChanged($this->clock->now());*/
 	}
 }
