@@ -6,6 +6,7 @@ namespace App\Service\State\Processor\User;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
 use ApiPlatform\Validator\ValidatorInterface;
+use App\Exception\UserExistsException;
 use App\Repository\UserRepository;
 use App\Service\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,13 +25,13 @@ readonly class UserRegisterProcessor implements ProcessorInterface
 	{
 
 	}
-	public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = [])
-	{
+	public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): null
+    {
 		$user = $data->user;
 		if ($this->userRepository->findBy(['email'=>$user->getEmail()]))
-			throw new Exception('A user exists with that email.');
+			throw new UserExistsException('A user exists with that email.');
 		if ($this->userRepository->findBy(['username'=>$user->getUsername()]))
-			throw new Exception('A user exists with that username.');
+			throw new UserExistsException('A user exists with that username.');
 
 		$user->setPassword($this->passwordHasher->hashPassword($user, $data->plainPassword));
         $this->validator->validate($user, $operation->getValidationContext() ?? []);
