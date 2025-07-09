@@ -20,6 +20,7 @@
         "paragonie/paseto": "^3.2",
         "php-ds/php-ds": "^1.5",
         "symfony/asset": "7.3.*",
+        "symfony/clock": "*",
         "symfony/console": "7.3.*",
         "symfony/dotenv": "7.3.*",
         "symfony/expression-language": "7.3.*",

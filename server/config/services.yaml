@@ -24,10 +24,22 @@ services:
         arguments:
             $password: "%env(TOKEN_PASSWORD)%"
             $appIdentifier: "%app_identifier%"
-            
+
+    App\Service\Authentication\EmailVerificationTokenEncoder:
+        arguments:
+            $password: "%env(TOKEN_PASSWORD)%"
+
+    App\Service\Authentication\ResetPasswordTokenEncoder:
+        arguments:
+            $password: "%env(TOKEN_PASSWORD)%"
+
     App\Service\Authentication\TokenExtractor:
         arguments:
             $appIdentifier: "%app_identifier%"
+
+    App\Service\Authentication\TokenParser:
+        arguments:
+            $password: "%env(TOKEN_PASSWORD)%"
 
     App\Service\EmailVerifier:
         arguments:
@@ -35,3 +47,6 @@ services:
     App\Service\PasswordSetter:
         arguments:
             $fromEmail: "dank@example.com"
+    App\Service\UrlGenerator\ClientUrlGenerator:
+        arguments:
+            $clientUrl: "%env(CLIENT_URL)%"

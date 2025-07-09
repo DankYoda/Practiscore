@@ -2,8 +2,9 @@
 
 namespace App\Service\Authentication;
 
-use App\Exception\Resource\TokenExpired;
-use App\Exception\Resource\TokenInvalid;
+
+use App\Exception\TokenExpired;
+use App\Exception\TokenInvalid;
 use App\Model\Entity\User;
 use App\Repository\UserRepository;
 use DateInterval;

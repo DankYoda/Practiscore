@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-//use App\Exception\Resource\TokenInvalid;
+use App\Exception\TokenInvalid;
 use App\Model\Entity\User;
 use App\Service\Authentication\EmailVerificationTokenEncoder;
 use App\Service\UrlGenerator\VerificationUrlGenerator;
@@ -23,7 +23,7 @@ readonly class EmailVerifier {
 
 	public function sendEmail(User $user): void {
         //TODO fix email message
-        /*$token = $this->tokenEncoder->create($user);
+        $token = $this->tokenEncoder->create($user);
 		$url = $this->verificationUrlGenerator->generate()->expand(['userId' => $user->getId(), 'token' => $token]);
 		$email = (new Email())
 			->from($this->fromEmail)
@@ -38,14 +38,14 @@ readonly class EmailVerifier {
         <p><a href='{$url}' target='blank'>Click here to confirm your email</a></p>
     </body>
 </html>");
-		$this->mailer->send($email);*/
+		$this->mailer->send($email);
 	}
 
 	public function verify(User $user, string $token): void {
-		$tokenUser = $token;//$this->tokenEncoder->verify($token);
+		$tokenUser = $this->tokenEncoder->verify($token);
 
         if ($tokenUser->getId() !== $user->getId())
-            //throw new TokenInvalid();
+            throw new TokenInvalid();
 
         $tokenUser->setEmailVerified(true);
 	}

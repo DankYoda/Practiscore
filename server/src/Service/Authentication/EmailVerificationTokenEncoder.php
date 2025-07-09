@@ -2,8 +2,8 @@
 
 namespace App\Service\Authentication;
 
-use App\Exception\Resource\TokenExpired;
-use App\Exception\Resource\TokenInvalid;
+use App\Exception\TokenExpired;
+use App\Exception\TokenInvalid;
 use App\Model\Entity\User;
 use App\Repository\UserRepository;
 use DateInterval;
@@ -40,7 +40,7 @@ readonly class EmailVerificationTokenEncoder
             // If the user does not exist
             if (!$user) {
                 $this->logger->info('An unexpected error occurred: A token was decoded with an user that does not exist.');
-                throw new TokenInvalid();
+                //throw new TokenInvalid();
             }
 
             // If the token issued date is before the user's from date
@@ -55,7 +55,7 @@ readonly class EmailVerificationTokenEncoder
                 throw new TokenInvalid();
 
         } catch (PasetoException) {
-            throw new TokenInvalid();
+            //throw new TokenInvalid();
         }
         return $user;
 	}

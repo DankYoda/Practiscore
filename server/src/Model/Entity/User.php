@@ -21,8 +21,10 @@ use App\Service\State\Processor\User\UserChangeEmailProcessor;
 use App\Service\State\Processor\User\UserRegisterProcessor;
 use App\Service\State\Processor\User\UserVerifyProcessor;
 use App\Service\State\Provider\User\SendPasswordResetProvider;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
@@ -159,6 +161,11 @@ class User implements UserInterface, PasswordUpgraderInterface, PasswordAuthenti
     ])]
     #[Assert\Email]
     private string $email;
+	#[ORM\Column]
+	#[Groups([
+		'user:default:read',
+	])]
+	private bool $emailVerified = false;
     #[ORM\Column]
     private string $password = '';
     #[ORM\Column]
@@ -200,6 +207,12 @@ class User implements UserInterface, PasswordUpgraderInterface, PasswordAuthenti
 	#[ORM\Column]
 	#[Groups(['user:default:read'])]
 	private int $admin = 0;
+	
+	#[ORM\Column(
+		type: Types::DATETIME_IMMUTABLE
+	)]
+	#[Groups([])]
+	private ?DateTimeImmutable $passwordChanged = null;
 	
 	#[OneToOne(targetEntity: Club::class)]
 	#[JoinColumn(name: 'id_home_club', referencedColumnName: 'id', nullable: true)]
@@ -394,4 +407,23 @@ class User implements UserInterface, PasswordUpgraderInterface, PasswordAuthenti
 		return $this->registrations;
 	}
 	
+	public function setPasswordChanged(DateTimeImmutable $now): void
+	{
+		$this->passwordChanged = $now;
+	}
+	
+	public function getPasswordChanged(): DateTimeImmutable
+	{
+		return $this->passwordChanged;
+	}
+	
+	public function isEmailVerified(): bool
+	{
+		return $this->emailVerified;
+	}
+	
+	public function setEmailVerified(bool $emailVerified): void
+	{
+		$this->emailVerified = $emailVerified;
+	}
 }

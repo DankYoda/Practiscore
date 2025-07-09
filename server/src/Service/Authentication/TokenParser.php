@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Service\Security;
+namespace App\Service\Authentication;
 
-use App\Exception\Resource\TokenExpired;
+use App\Exception\TokenExpired;
 use ParagonIE\Paseto\Exception\PasetoException;
 use ParagonIE\Paseto\Exception\RuleViolation;
 use ParagonIE\Paseto\JsonToken;
@@ -14,15 +14,13 @@ use ParagonIE\Paseto\ProtocolCollection;
 use ParagonIE\Paseto\Purpose;
 use ParagonIE\Paseto\Rules\ValidAt;
 use Symfony\Component\Clock\ClockInterface;
-use Symfony\Component\Clock\NativeClock;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use UnexpectedValueException;
 
 readonly class TokenParser
 {
 	function __construct(
 		private string $password,
-        #[Autowire(service: NativeClock::class)] private ClockInterface $clock
+        private ClockInterface $clock
 	)
 	{
 		if (strlen($this->password)<32)
