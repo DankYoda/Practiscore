@@ -30,7 +30,6 @@ readonly class CookieToken
 	}
 	function cookieTokenCreate(TokenInterface $token): Response
 	{
-		$this->userRepository->flush();
 		$user = $this->userRepository->findOneBy(['username'=>$token->getUserIdentifier()]);
 		$privateKey = new SymmetricKey(hash('sha256', $this->password, true), new Version3());
 		$now = new \DateTimeImmutable();

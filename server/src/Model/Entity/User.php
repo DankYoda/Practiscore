@@ -48,7 +48,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[GetCollection(
     uriTemplate: '/user',
     normalizationContext: ['groups' => ['user:default:read']],
-    security: "is_granted('ROLE_ADMIN')"	
+    security: "is_granted('ROLE_ADMIN')"
 )]
 #[Patch(
     uriTemplate: '/user/{userId}',
@@ -211,8 +211,13 @@ class User implements UserInterface, PasswordUpgraderInterface, PasswordAuthenti
 	#[ORM\Column(
 		type: Types::DATETIME_IMMUTABLE
 	)]
-	#[Groups([])]
 	private ?DateTimeImmutable $passwordChanged = null;
+	
+	#[ORM\Column(
+		type: Types::DATETIME_IMMUTABLE,
+		nullable: true
+	)]
+	private ?DateTimeImmutable $notBefore = null;
 	
 	#[OneToOne(targetEntity: Club::class)]
 	#[JoinColumn(name: 'id_home_club', referencedColumnName: 'id', nullable: true)]
@@ -239,7 +244,7 @@ class User implements UserInterface, PasswordUpgraderInterface, PasswordAuthenti
     }
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
-        // TODO: Implement upgradePassword() method.
+		
     }
 	#[Groups(['user:default:read'])]
     public function getRoles(): array
@@ -306,10 +311,12 @@ class User implements UserInterface, PasswordUpgraderInterface, PasswordAuthenti
 	{
 		return $this->password;
 	}
-
+	
 	public function setPassword(string $password): void
 	{
 		$this->password = $password;
+		$this->passwordChanged = new DateTimeImmutable();
+		$this->notBefore = null;
 	}
 
 	public function getTitles(): string
@@ -425,5 +432,15 @@ class User implements UserInterface, PasswordUpgraderInterface, PasswordAuthenti
 	public function setEmailVerified(bool $emailVerified): void
 	{
 		$this->emailVerified = $emailVerified;
+	}
+	
+	public function getNotBefore(): ?DateTimeImmutable
+	{
+		return $this->notBefore;
+	}
+	
+	public function setNotBefore(?DateTimeImmutable $notBefore): void
+	{
+		$this->notBefore = $notBefore;
 	}
 }

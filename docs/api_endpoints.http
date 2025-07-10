@@ -1,29 +1,32 @@
 ###Login
 # @timeout 600 m
+# @no-cookie-jar
 POST http://localhost:8000/public/index.php/login
 Accept: application/ld+json
 Content-Type: application/ld+json
 
 {
-  "username": "DankYoda",
-  "password": "Armando1234567890"
+  "username": "{{username}}",
+  "password": "{{password}}"
 }
 
 ###GET Users
 # @timeout 600 m
-
+# @no-cookie-jar
 GET http://localhost:8000/public/index.php/user
 Accept: application/ld+json
+Cookie: {{cookie}}
 
 ###Create User
 # @timeout 600 m
+# @no-cookie-jar
 POST http://localhost:8000/public/index.php/user/register
 Accept: application/ld+json
 Content-Type: application/ld+json
 
 {
   "user": {
-    "username" : "DankYoda",
+    "username" : "{{username}}",
 	"firstName": "Dank",
 	"lastName": "Yoda",
     "email" : "dank@gmail.com",
@@ -34,11 +37,13 @@ Content-Type: application/ld+json
     "instagramHandle" : "",
     "bio" : ""
   },
-  "plainPassword": "Armando1234567890"
+  "plainPassword": "{{password}}"
 }
 
 
 ###GET MatchTypes
 # @timeout 600 m
+# @no-cookie-jar
 GET http://localhost:8000/public/index.php/match_type
 Accept: application/ld+json
+Cookie: {{cookie}}

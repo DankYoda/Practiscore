@@ -8,10 +8,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\AccessToken\AccessTokenExtractorInterface;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 
-class TokenExtractor implements AccessTokenExtractorInterface
+readonly class TokenExtractor implements AccessTokenExtractorInterface
 {
 	function __construct(
-		private readonly string $appIdentifier,
+		private string $appIdentifier,
 	)
 	{
 		
