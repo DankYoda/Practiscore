@@ -10,9 +10,11 @@ use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToOne;
 use Symfony\Component\Uid\Uuid;
 use Doctrine\ORM\Mapping as ORM;
@@ -29,6 +31,7 @@ use Doctrine\ORM\Mapping as ORM;
 )]
 #[Post(
 	uriTemplate: '/gathering',
+	security : "object.club === user.managedClub"
 )]
 #[Patch(
 	uriTemplate: '/gathering/{id}',
@@ -80,7 +83,7 @@ class Gathering
 	private string $eventType;
 	#[ORM\Column]
 	private string $matchType;
-	#[OneToOne(targetEntity: Club::class)]
+	#[ManyToOne(targetEntity: Club::class, inversedBy: 'gatherings')]
 	#[JoinColumn(name: 'id_club', referencedColumnName: 'id', nullable: false)]
 	private Club $club;
 	
@@ -93,6 +96,7 @@ class Gathering
 	{
 		$this->id = Uuid::v4()->toRfc4122();
 		$this->club = $homeClub;
+		$this->registrations = new ArrayCollection();
 	}
 	
 	public function getId(): string
@@ -223,5 +227,10 @@ class Gathering
 	public function getHomeClub(): ?Club
 	{
 		return $this->club;
+	}
+	
+	public function getRegistrations(): Collection
+	{
+		return $this->registrations;
 	}
 }

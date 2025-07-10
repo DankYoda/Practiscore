@@ -7,6 +7,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Patch;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Uid\Uuid;
@@ -27,6 +28,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 	uriVariables: [
 		'id' => new Link(fromClass: Club::class),
 	],
+	security : "object === user.managedClub"
 )]
 class Club{
 	#[ORM\Id]
@@ -56,6 +58,9 @@ class Club{
 	#[ORM\Column]
 	#[Groups(['user:default:read'])]
 	private string $website = '';
+	
+	#[ORM\OneToMany(targetEntity: Gathering::class, mappedBy: 'club')]
+	private Collection $gatherings;
 	
 	public function __construct(
 		string $name,

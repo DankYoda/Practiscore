@@ -19,24 +19,28 @@ use Symfony\Component\Uid\Uuid;
 	uriVariables: [
 		'id' => new Link(fromClass: Registration::class),
 	],
+	security : "object.user === user"
 )]
 #[GetCollection(
 	uriTemplate: '/registration',
 )]
 #[Post(
 	uriTemplate: '/registration',
+	security : "object.user === user"
 )]
 #[Patch(
 	uriTemplate: '/registration/{id}',
 	uriVariables: [
 		'id' => new Link(fromClass: Registration::class),
 	],
+	security : "object.user === user"
 )]
 #[Delete(
 	uriTemplate: '/registration/{id}',
 	uriVariables: [
 		'id' => new Link(fromClass: Registration::class),
 	],
+	security : "object.user === user"
 )]
 class Registration
 {
