@@ -235,12 +235,14 @@ class User implements UserInterface, PasswordUpgraderInterface, PasswordAuthenti
     public function __construct(
         string $username,
         string $email,
+        ?\DateTimeImmutable $passwordChanged = null,
     )
     {
         $this->id = Uuid::v4()->toRfc4122();
         $this->username = $username;
         $this->email = $email;
-		$this->registrations = new ArrayCollection();
+        if ($passwordChanged) $this->setPasswordChanged($passwordChanged);
+	$this->registrations = new ArrayCollection();
     }
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
@@ -416,7 +418,8 @@ class User implements UserInterface, PasswordUpgraderInterface, PasswordAuthenti
 	
 	public function setPasswordChanged(DateTimeImmutable $now): void
 	{
-		$this->passwordChanged = $now;
+		$this->passwordChanged = $passwordChanged;
+       		$this->setNotBefore($passwordChanged);
 	}
 	
 	public function getPasswordChanged(): DateTimeImmutable
