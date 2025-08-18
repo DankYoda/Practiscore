@@ -4,6 +4,8 @@ security:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
+        login_user:
+            id: App\Service\LoginUserProvider
         users:
             entity:
                 class: App\Model\Entity\User
@@ -13,7 +15,7 @@ security:
             pattern: '^/login$'
             methods: [POST]
             stateless: true
-            provider: users
+            provider: login_user
             login_throttling:
                 max_attempts: 10
             json_login:
