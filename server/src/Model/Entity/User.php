@@ -418,8 +418,8 @@ class User implements UserInterface, PasswordUpgraderInterface, PasswordAuthenti
 	
 	public function setPasswordChanged(DateTimeImmutable $now): void
 	{
-		$this->passwordChanged = $passwordChanged;
-       		$this->setNotBefore($passwordChanged);
+		$this->passwordChanged = $now;
+		$this->setNotBefore($now);
 	}
 	
 	public function getPasswordChanged(): DateTimeImmutable
