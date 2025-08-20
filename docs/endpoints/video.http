@@ -1,0 +1,48 @@
+###GET Videos
+# @timeout 600 m
+# @no-cookie-jar
+GET http://localhost:8000/public/index.php/user/{idUser}/video
+Accept: application/ld+json
+Cookie: {{cookie}}
+
+###GET Video
+# @timeout 600 m
+# @no-cookie-jar
+GET http://localhost:8000/public/index.php/user/{idUser}/video/{idVideo}}
+Accept: application/ld+json
+Cookie: {{cookie}}
+
+###POST Video
+# @timeout 600 m
+# @no-cookie-jar
+POST http://localhost:8000/public/index.php/user/61817b11-dfc3-475e-a5eb-fde37defef98/video
+Accept: application/ld+json
+Content-Type: application/ld+json
+Cookie: {{cookie}}
+
+{
+    "url" : "potato.com",
+    "description" : "the best description ever"
+}
+
+
+###PATCH Video
+# @timeout 600 m
+# @no-cookie-jar
+PATCH http://localhost:8000/public/index.php/user/61817b11-dfc3-475e-a5eb-fde37defef98/video/66673bbf-571c-40f4-b19d-2a52eed1cdd8
+Accept: application/ld+json
+Content-Type: application/merge-patch+json
+Cookie: {{cookie}}
+
+{
+  "url" : "dragon.com",
+  "description" : "the best description ever"
+}
+
+
+###DELETE Video
+# @timeout 600 m
+# @no-cookie-jar
+DELETE http://localhost:8000/public/index.php/user/{idUser}/video/{idVideo}}
+Accept: application/ld+json
+Cookie: {{cookie}}

@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use App\Service\State\Provider\VIdeo\VideoPostProvider;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,26 +17,36 @@ use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
 #[Get(
-	uriTemplate: '/video/{id}',
+	uriTemplate: '/user/{idUser}/video/{id}',
 	uriVariables: [
+		'idUser' => new Link(toProperty: 'user', fromClass: User::class),
 		'id' => new Link(fromClass: Video::class),
 	],
 )]
 #[GetCollection(
-	uriTemplate: '/video',
+	uriTemplate: '/user/{idUser}/video',
+	uriVariables: [
+		'idUser' => new Link(toProperty: 'user', fromClass: User::class),
+	]
 )]
 #[Post(
-	uriTemplate: '/video',
+	uriTemplate: '/user/{idUser}/video',
+	uriVariables: [
+		'idUser' => new Link(toProperty: 'user', fromClass: User::class),
+	],
+	provider: VideoPostProvider::class,
 )]
 #[Patch(
-	uriTemplate: '/video/{id}',
+	uriTemplate: '/user/{idUser}/video/{id}',
 	uriVariables: [
+		'idUser' => new Link(toProperty: 'user', fromClass: User::class),
 		'id' => new Link(fromClass: Video::class),
 	],
 )]
 #[Delete(
-	uriTemplate: '/video/{id}',
+	uriTemplate: '/user/{idUser}/video/{id}',
 	uriVariables: [
+		'idUser' => new Link(toProperty: 'user', fromClass: User::class),
 		'id' => new Link(fromClass: Video::class),
 	],
 )]
@@ -50,23 +61,23 @@ class Video
 	)]
 	private readonly string $id;
 	#[ORM\Column]
-	private string $name;
+	private string $url;
+	
 	#[ORM\Column]
-	private string $data;
+	private string $description;
 	#[OneToOne(targetEntity: User::class)]
 	#[JoinColumn(name: 'id_user', referencedColumnName: 'id', nullable: true)]
 	private User $user;
 	
 	public function __construct(
-		string $id,
-		string $name,
-		string $data,
+		string $url,
+		string $description,
 		User $user
 	)
 	{
 		$this->id = Uuid::v4()->toRfc4122();
-		$this->name = $name;
-		$this->data = $data;
+		$this->url = $url;
+		$this->description = $description;
 		$this->user = $user;
 	}
 	
@@ -75,24 +86,9 @@ class Video
 		return $this->id;
 	}
 	
-	public function getName(): string
+	public function getUrl(): string
 	{
-		return $this->name;
-	}
-	
-	public function setName(string $name): void
-	{
-		$this->name = $name;
-	}
-	
-	public function getData(): string
-	{
-		return $this->data;
-	}
-	
-	public function setData(string $data): void
-	{
-		$this->data = $data;
+		return $this->url;
 	}
 	
 	public function getUser(): User
@@ -104,4 +100,20 @@ class Video
 	{
 		$this->user = $user;
 	}
+	
+	public function getDescription(): string
+	{
+		return $this->description;
+	}
+	
+	public function setUrl(string $url): void
+	{
+		$this->url = $url;
+	}
+	
+	public function setDescription(string $description): void
+	{
+		$this->description = $description;
+	}
+	
 }
