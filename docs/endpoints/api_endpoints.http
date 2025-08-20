@@ -39,11 +39,3 @@ Content-Type: application/ld+json
   },
   "plainPassword": "{{password}}"
 }
-
-
-###GET MatchTypes
-# @timeout 600 m
-# @no-cookie-jar
-GET http://localhost:8000/public/index.php/match_type
-Accept: application/ld+json
-Cookie: {{cookie}}

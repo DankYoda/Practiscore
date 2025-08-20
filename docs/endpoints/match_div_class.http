@@ -1,0 +1,27 @@
+###GET MatchTypes
+# @timeout 600 m
+# @no-cookie-jar
+GET http://localhost:8000/public/index.php/match_type
+Accept: application/ld+json
+Cookie: {{cookie}}
+
+###GET a MatchType
+# @timeout 600 m
+# @no-cookie-jar
+GET http://localhost:8000/public/index.php/match_type/{name}
+Accept: application/ld+json
+Cookie: {{cookie}}
+
+###GET Division
+# @timeout 600 m
+# @no-cookie-jar
+GET http://localhost:8000/public/index.php/division/{name}
+Accept: application/ld+json
+Cookie: {{cookie}}
+
+###GET Classification
+# @timeout 600 m
+# @no-cookie-jar
+GET http://localhost:8000/public/index.php/classification/{name}
+Accept: application/ld+json
+Cookie: {{cookie}}

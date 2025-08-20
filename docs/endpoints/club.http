@@ -1,0 +1,29 @@
+###GET Clubs
+# @timeout 600 m
+# @no-cookie-jar
+GET http://localhost:8000/public/index.php/club
+Accept: application/ld+json
+Cookie: {{cookie}}
+
+###GET Clubs
+# @timeout 600 m
+# @no-cookie-jar
+GET http://localhost:8000/public/index.php/club/b81791f6-88ae-44e5-af18-980cb28c6fa1
+Accept: application/ld+json
+Cookie: {{cookie}}
+
+###PATCH club
+# @timeout 600 m
+# @no-cookie-jar
+PATCH http://localhost:8000/public/index.php/club/{id}
+Cookie: {{cookie}}
+Accept: application/ld+json
+Content-Type: application/merge-patch+json
+
+{
+  "name": "FMPSA",
+  "email": "FMPSA@example.com",
+  "address": "Ayoooo",
+  "socials": "",
+  "website": "https://www.fmpsa.com/"
+}

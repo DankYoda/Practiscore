@@ -43,9 +43,7 @@ GET /match_type
 GET /match_type/{name}
 
 ## Division
-GET /division
 GET /division/{name}
 
 ## Classification
-GET /classification
 GET /classification/{name}

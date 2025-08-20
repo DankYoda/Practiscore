@@ -28,7 +28,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 	uriVariables: [
 		'id' => new Link(fromClass: Club::class),
 	],
-	security : "object === user.managedClub"
+	security : "object === user.getManagedClub()"
 )]
 class Club{
 	#[ORM\Id]
