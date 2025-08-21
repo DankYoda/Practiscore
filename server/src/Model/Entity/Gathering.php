@@ -3,26 +3,27 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use App\Service\State\Provider\Gathering\GatheringPatchProvider;
+use App\Service\State\Provider\Gathering\GatheringPostProvider;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\OneToOne;
 use Symfony\Component\Uid\Uuid;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[Get(
-	uriTemplate: '/gathering/{id}',
+	uriTemplate: '/club/{idClub}/gathering/{id}',
 	uriVariables: [
+		'idClub' => new Link(toProperty: 'club', fromClass: Club::class),
 		'id' => new Link(fromClass: Gathering::class),
 	],
 )]
@@ -30,14 +31,19 @@ use Doctrine\ORM\Mapping as ORM;
 	uriTemplate: '/gathering',
 )]
 #[Post(
-	uriTemplate: '/gathering',
-	security : "object.club === user.getManagedClub()"
+	uriTemplate: '/club/{idClub}/gathering',
+	uriVariables: [
+		'idClub' => new Link(toProperty: 'club', fromClass: Club::class),
+	],
+	provider: GatheringPostProvider::class
 )]
 #[Patch(
-	uriTemplate: '/gathering/{id}',
+	uriTemplate: '/club/{idClub}/gathering/{id}',
 	uriVariables: [
+		'idClub' => new Link(toProperty: 'club', fromClass: Club::class),
 		'id' => new Link(fromClass: Gathering::class),
 	],
+	provider: GatheringPatchProvider::class
 )]
 class Gathering
 {
@@ -91,11 +97,11 @@ class Gathering
 	private Collection $registrations;
 	
 	public function __construct(
-		Club $homeClub,
+		Club $club,
 	)
 	{
 		$this->id = Uuid::v4()->toRfc4122();
-		$this->club = $homeClub;
+		$this->club = $club;
 		$this->registrations = new ArrayCollection();
 	}
 	
@@ -224,7 +230,7 @@ class Gathering
 		$this->matchType = $matchType;
 	}
 	
-	public function getHomeClub(): ?Club
+	public function getClub(): ?Club
 	{
 		return $this->club;
 	}

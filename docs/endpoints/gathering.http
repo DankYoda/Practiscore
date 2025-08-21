@@ -1,0 +1,62 @@
+###GET Gatherings
+# @timeout 600 m
+# @no-cookie-jar
+GET http://localhost:8000/public/index.php/gathering
+Accept: application/ld+json
+Cookie: {{cookie}}
+
+###GET Gathering
+# @timeout 600 m
+# @no-cookie-jar
+GET http://localhost:8000/public/index.php/club/{idClub}/gathering/{id}
+Accept: application/ld+json
+Cookie: {{cookie}}
+
+###POST Gathering
+# @timeout 600 m
+# @no-cookie-jar
+POST http://localhost:8000/public/index.php/club/{idClub}/gathering
+Accept: application/ld+json
+Content-Type: application/ld+json
+Cookie: {{cookie}}
+
+{
+  "address": "Fargo",
+  "state": "ND",
+  "city": "Glyndon",
+  "country": "USA",
+  "description": "go fast",
+  "openDate": "2025-08-26",
+  "closeDate": "2025-08-26",
+  "startDate": "2025-11-26",
+  "endDate": "2025-11-26",
+  "waiver": "string",
+  "eventType": "string",
+  "matchType": "string"
+}
+
+###PATCH Gathering
+# @timeout 600 m
+# @no-cookie-jar
+PATCH http://localhost:8000/public/index.php/club/{idClub}/gathering/{id}
+Accept: application/ld+json
+Content-Type: application/merge-patch+json
+Cookie: {{cookie}}
+
+{
+  "address": "Fargo",
+  "state": "ND",
+  "city": "Glyndon",
+  "country": "USA",
+  "description": "plad speed",
+  "openDate": "2025-08-26",
+  "closeDate": "2025-08-26",
+  "startDate": "2025-08-26",
+  "endDate": "2025-08-26",
+  "waiver": "string",
+  "eventType": "string",
+  "matchType": "string",
+  "homeClub": "https://example.com/"
+}
+
+
