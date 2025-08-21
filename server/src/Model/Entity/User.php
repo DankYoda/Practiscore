@@ -166,7 +166,9 @@ class User implements UserInterface, PasswordUpgraderInterface, PasswordAuthenti
 		'user:default:read',
 	])]
 	private bool $emailVerified = false;
-    #[ORM\Column]
+    #[ORM\Column(
+        nullable: false
+    )]
     private string $password = '';
     #[ORM\Column]
     #[Groups([

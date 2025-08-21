@@ -5,17 +5,16 @@ namespace App\Service\State\Provider\Gathering;
 use ApiPlatform\Metadata\Exception\AccessDeniedException;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
-use App\Model\Entity\Gathering;
 use App\Repository\ClubRepository;
 use App\Repository\GatheringRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 
-class GatheringPatchProvider implements ProviderInterface
+readonly class GatheringPatchProvider implements ProviderInterface
 {
 	function __construct(
-		private readonly Security $security,
-		private readonly ClubRepository $clubRepository,
-		private readonly GatheringRepository $gatheringRepository,
+		private Security            $security,
+		private ClubRepository      $clubRepository,
+		private GatheringRepository $gatheringRepository,
 	)
 	{
 	

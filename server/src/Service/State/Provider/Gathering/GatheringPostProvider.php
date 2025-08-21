@@ -9,11 +9,11 @@ use App\Model\Entity\Gathering;
 use App\Repository\ClubRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 
-class GatheringPostProvider implements ProviderInterface
+readonly class GatheringPostProvider implements ProviderInterface
 {
 	function __construct(
-		private readonly Security $security,
-		private readonly ClubRepository $clubRepository,
+		private Security       $security,
+		private ClubRepository $clubRepository,
 	)
 	{
 	

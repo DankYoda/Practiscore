@@ -8,10 +8,10 @@ use ApiPlatform\State\ProviderInterface;
 use App\Model\Entity\Video;
 use Symfony\Bundle\SecurityBundle\Security;
 
-class VideoPostProvider implements ProviderInterface
+readonly class VideoPostProvider implements ProviderInterface
 {
 	function __construct(
-		private readonly Security $security,
+		private Security $security,
 	)
 	{
 	
