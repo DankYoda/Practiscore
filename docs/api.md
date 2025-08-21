@@ -1,49 +1,49 @@
 # Endpoints
 
 ## User
-GET /user
-POST /user/register
-POST /user/{email}/password/reset/send
-GET /user/{id}
-PATCH /user/{id}
-PUT /user/{id}/email/change
-PUT /user/{id}/email/verify
-POST /user/{id}/email/send
-PUT /user/{id}/password/change
-PUT /user/{id}/password/reset
+- GET /user
+- POST /user/register
+- POST /user/{email}/password/reset/send
+- GET /user/{id}
+- PATCH /user/{id}
+- PUT /user/{id}/email/change
+- PUT /user/{id}/email/verify
+- POST /user/{id}/email/send
+- PUT /user/{id}/password/change
+- PUT /user/{id}/password/reset
 
 ## Club
-GET /club
-GET /club/{id}
-PATCH /club/{id}
+- GET /club
+- GET /club/{id}
+- PATCH /club/{id}
 
 ## Gathering
-GET /gathering
-GET /club/{idClub}/gathering/{id}
-POST /club/{idClub}/gathering
-PATCH /club/{idClub}/gathering/{id}
+- GET /gathering
+- GET /club/{idClub}/gathering/{id}
+- POST /club/{idClub}/gathering
+- PATCH /club/{idClub}/gathering/{id}
 
 ## Registration
-GET /gathering/{id}/registration
-GET /user/{id}/registration
-GET /registration/{id}
-POST /user/{id}/registration
-PATCH /user/{id}/registration/{id}
-DELETE /user/{id}/registration
+- GET /gathering/{id}/registration
+- GET /user/{id}/registration
+- GET /registration/{id}
+- POST /user/{id}/registration
+- PATCH /user/{id}/registration/{id}
+- DELETE /user/{id}/registration
 
 ## Video
-GET /user/{id}/video
-GET /user/{id}/video/{id}
-POST /user/{id}/video
-PATCH /user/{id}/video/{id}
-DELETE /user/{id}/video/{id}
+- GET /user/{id}/video
+- GET /user/{id}/video/{id}
+- POST /user/{id}/video
+- PATCH /user/{id}/video/{id}
+- DELETE /user/{id}/video/{id}
 
 ## MatchType
-GET /match_type
-GET /match_type/{name}
+- GET /match_type
+- GET /match_type/{name}
 
 ## Division
-GET /division/{name}
+- GET /division/{name}
 
 ## Classification
-GET /classification/{name}
+- GET /classification/{name}

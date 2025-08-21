@@ -31,7 +31,7 @@ use Doctrine\ORM\Mapping as ORM;
 )]
 #[Post(
 	uriTemplate: '/gathering',
-	security : "object.club === user.managedClub"
+	security : "object.club === user.getManagedClub()"
 )]
 #[Patch(
 	uriTemplate: '/gathering/{id}',
