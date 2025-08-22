@@ -31,7 +31,7 @@ Cookie: {{cookie}}
   "division": "Carry Optics",
   "classification": "U",
   "powerFactor": "MINOR",
-  "memberNumber": "0000000",
+  "memberNumber": "7890",
   "category": 0
 }
 
@@ -55,4 +55,4 @@ Cookie: {{cookie}}
 # @timeout 600 m
 # @no-cookie-jar
 DELETE http://localhost:8000/public/index.php/user/{id}/registration/{id}
-Accept: application/ld+json
+Cookie: {{cookie}}

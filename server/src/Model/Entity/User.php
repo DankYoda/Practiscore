@@ -263,7 +263,7 @@ class User implements UserInterface, PasswordUpgraderInterface, PasswordAuthenti
 
     public function eraseCredentials(): void
     {
-        $this->password = '';
+
     }
 
     public function getUserIdentifier(): string

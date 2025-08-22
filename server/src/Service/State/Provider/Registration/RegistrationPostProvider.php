@@ -26,7 +26,7 @@ readonly class RegistrationPostProvider implements ProviderInterface
         $gathering = $this->gatheringRepository->find($uriVariables['idGather']);
         if(!$gathering)
             throw new NotFoundHttpException("Gathering not found");
-        if (!$this->registrationRepository->findOneBy([
+        if ($this->registrationRepository->findOneBy([
             'gathering' => $gathering,
             'user' => $this->security->getUser()
         ]))
