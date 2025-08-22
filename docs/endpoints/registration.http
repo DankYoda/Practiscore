@@ -1,0 +1,58 @@
+###GET Registrations by Gathering
+# @timeout 600 m
+# @no-cookie-jar
+GET http://localhost:8000/public/index.php/gathering/{id}/registration
+Accept: application/ld+json
+Cookie: {{cookie}}
+
+###GET Registrations by User
+# @timeout 600 m
+# @no-cookie-jar
+GET http://localhost:8000/public/index.php/user/{id}/registration
+Accept: application/ld+json
+Cookie: {{cookie}}
+
+###GET Registration
+# @timeout 600 m
+# @no-cookie-jar
+GET http://localhost:8000/public/index.php/user/{id}/registration/{id}
+Accept: application/ld+json
+Cookie: {{cookie}}
+
+###POST Registration
+# @timeout 600 m
+# @no-cookie-jar
+POST http://localhost:8000/public/index.php/gathering/{id}/registration
+Accept: application/ld+json
+Content-Type: application/ld+json
+Cookie: {{cookie}}
+
+{
+  "division": "Carry Optics",
+  "classification": "U",
+  "powerFactor": "MINOR",
+  "memberNumber": "0000000",
+  "category": 0
+}
+
+###Patch Registration
+# @timeout 600 m
+# @no-cookie-jar
+PATCH http://localhost:8000/public/index.php/user/{id}/registration/{id}
+Accept: application/ld+json
+Content-Type: application/merge-patch+json
+Cookie: {{cookie}}
+
+{
+  "division": "Carry Optics",
+  "classification": "U",
+  "powerFactor": "MINOR",
+  "memberNumber": "8888888888",
+  "category": 0
+}
+
+###Delete Registration
+# @timeout 600 m
+# @no-cookie-jar
+DELETE http://localhost:8000/public/index.php/user/{id}/registration/{id}
+Accept: application/ld+json

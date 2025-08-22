@@ -3,22 +3,24 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use App\Model\Entity\Club;
+use App\Model\Entity\Registration;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-class ClubRepository extends ServiceEntityRepository {
+class
+
+RegistrationRepository extends ServiceEntityRepository {
 	public function __construct(
 		ManagerRegistry $registry,
 	) {
-		parent::__construct($registry, Club::class);
+		parent::__construct($registry, Registration::class);
 	}
 
-	public function save(Club $entity): void {
+	public function save(Registration $entity): void {
 		$this->getEntityManager()->persist($entity);
 	}
 
-	public function remove(Club $entity, bool $flush = false): void {
+	public function remove(Registration $entity, bool $flush = false): void {
 		$this->getEntityManager()->remove($entity);
 	}
 }

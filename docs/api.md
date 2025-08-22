@@ -27,7 +27,7 @@
 - GET /gathering/{id}/registration
 - GET /user/{id}/registration
 - GET /user/{id}/registration/{id}
-- POST /user/{id}/registration
+- POST /gathering/{id}/registration
 - PATCH /user/{id}/registration/{id}
 - DELETE /user/{id}/registration
 

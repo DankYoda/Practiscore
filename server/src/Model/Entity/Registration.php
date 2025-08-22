@@ -9,38 +9,52 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use App\Service\State\Provider\Registration\RegistrationPatchProvider;
+use App\Service\State\Provider\Registration\RegistrationPostProvider;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
 #[Get(
-	uriTemplate: '/registration/{id}',
+	uriTemplate: '/user/{idUser}/registration/{id}',
 	uriVariables: [
+        'idUser' => new Link(toProperty: 'user', fromClass: User::class),
 		'id' => new Link(fromClass: Registration::class),
 	],
-	security : "object.user === user"
 )]
 #[GetCollection(
-	uriTemplate: '/registration',
+	uriTemplate: '/user/{idUser}/registration',
+    uriVariables: [
+        'idUser' => new Link(toProperty: 'user', fromClass: User::class)
+	],
+)]
+#[GetCollection(
+	uriTemplate: '/gathering/{idGather}/registration',
+    uriVariables: [
+        'idGather' => new Link(toProperty: 'gathering', fromClass: Gathering::class)
+	],
 )]
 #[Post(
-	uriTemplate: '/registration',
-	security : "object.user === user"
+    uriTemplate: '/gathering/{idGather}/registration',
+	uriVariables: [
+        'idGather' => new Link(toProperty: 'gathering', fromClass: Gathering::class),
+	],
+    provider: RegistrationPostProvider::class
 )]
 #[Patch(
-	uriTemplate: '/registration/{id}',
+    uriTemplate: '/user/{idUser}/registration/{id}',
 	uriVariables: [
+        'idUser' => new Link(toProperty: 'user', fromClass: User::class),
 		'id' => new Link(fromClass: Registration::class),
-	],
-	security : "object.user === user"
+	]
 )]
 #[Delete(
-	uriTemplate: '/registration/{id}',
+    uriTemplate: '/user/{idUser}/registration/{id}',
 	uriVariables: [
+        'idUser' => new Link(toProperty: 'user', fromClass: User::class),
 		'id' => new Link(fromClass: Registration::class),
-	],
-	security : "object.user === user"
+	]
 )]
 class Registration
 {
