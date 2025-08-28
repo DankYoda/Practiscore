@@ -20,9 +20,7 @@ class Score
 	private readonly string $id;
 
 	public function __construct(
-        string $username,
-        string $email,
-        ?\DateTimeImmutable $passwordChanged = null,
+
     )
     {
         $this->id = Uuid::v4()->toRfc4122();
