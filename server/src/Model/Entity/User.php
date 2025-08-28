@@ -244,7 +244,7 @@ class User implements UserInterface, PasswordUpgraderInterface, PasswordAuthenti
         $this->username = $username;
         $this->email = $email;
         if ($passwordChanged) $this->setPasswordChanged($passwordChanged);
-	$this->registrations = new ArrayCollection();
+		$this->registrations = new ArrayCollection();
     }
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {

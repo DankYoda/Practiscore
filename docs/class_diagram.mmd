@@ -5,6 +5,7 @@ classDiagram
     User --> Club: managedClub
     User --> Club: homeClub
     User --> "*" Registration: registrations
+    User --> "*" Score: scores
     class User {
         firstName: string
         lastName: string
@@ -32,6 +33,14 @@ classDiagram
         address: string
         socials: string
     }
+    Score "*" --> User: user
+    Score "*" --> Gathering: gathering
+    class Score {
+        alpha: int
+        charlie: int
+        delta: int
+        mike: int
+    }
 
     Registration "*" --> User: user
     Registration "*" --> Gathering: gathering
@@ -43,6 +52,7 @@ classDiagram
         category: int
     }
 
+    Gathering --> "*" Score: scores
     Gathering --> "*" Registration: registrations
     Gathering "*" --> Club: club
     class Gathering {
