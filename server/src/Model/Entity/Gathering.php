@@ -95,6 +95,9 @@ class Gathering
 	
 	#[ORM\OneToMany(targetEntity: Registration::class, mappedBy: 'gathering')]
 	private Collection $registrations;
+
+	#[ORM\OneToMany(targetEntity: Score::class, mappedBy: 'gathering')]
+	private Collection $scores;
 	
 	public function __construct(
 		Club $club,
@@ -103,6 +106,7 @@ class Gathering
 		$this->id = Uuid::v4()->toRfc4122();
 		$this->club = $club;
 		$this->registrations = new ArrayCollection();
+		$this->scores = new ArrayCollection();
 	}
 	
 	public function getId(): string
@@ -238,5 +242,10 @@ class Gathering
 	public function getRegistrations(): Collection
 	{
 		return $this->registrations;
+	}
+
+	public function getScores(): Collection
+	{
+		return $this->scores;
 	}
 }

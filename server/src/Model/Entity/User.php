@@ -234,6 +234,10 @@ class User implements UserInterface, PasswordUpgraderInterface, PasswordAuthenti
 	#[Groups(['user:default:read'])]
 	private Collection $registrations;
 
+	#[ORM\OneToMany(targetEntity: Score::class, mappedBy: 'user')]
+	#[Groups(['user:default:read'])]
+	private Collection $scores;
+
     public function __construct(
         string $username,
         string $email,
@@ -245,6 +249,7 @@ class User implements UserInterface, PasswordUpgraderInterface, PasswordAuthenti
         $this->email = $email;
         if ($passwordChanged) $this->setPasswordChanged($passwordChanged);
 		$this->registrations = new ArrayCollection();
+		$this->scores = new ArrayCollection();
     }
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
@@ -447,5 +452,10 @@ class User implements UserInterface, PasswordUpgraderInterface, PasswordAuthenti
 	public function setNotBefore(?DateTimeImmutable $notBefore): void
 	{
 		$this->notBefore = $notBefore;
+	}
+
+	public function getScores(): Collection
+	{
+		return $this->scores;
 	}
 }

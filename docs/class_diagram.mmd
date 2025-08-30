@@ -40,6 +40,7 @@ classDiagram
         charlie: int
         delta: int
         mike: int
+        noShoot: int
     }
 
     Registration "*" --> User: user
@@ -52,9 +53,9 @@ classDiagram
         category: int
     }
 
-    Gathering --> "*" Score: scores
     Gathering --> "*" Registration: registrations
     Gathering "*" --> Club: club
+    Gathering --> "*" Score: scores
     class Gathering {
         address: string
         state: string

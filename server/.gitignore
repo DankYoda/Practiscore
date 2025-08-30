@@ -13,3 +13,6 @@
 /.phpunit.cache/
 ###< phpunit/phpunit ###
 /.env.dev
+/composer.phar
+/.local.env
+/env.local

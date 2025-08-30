@@ -31,6 +31,13 @@
 - PATCH /user/{id}/registration/{id}
 - DELETE /user/{id}/registration
 
+## Score
+- GET /gathering/{id}/score
+- GET /user/{id}/score
+- GET /user/{id}/score/{id}
+- POST /user/{id}/score
+- PATCH /user/{id}/score
+
 ## Video
 - GET /user/{id}/video
 - GET /user/{id}/video/{id}
