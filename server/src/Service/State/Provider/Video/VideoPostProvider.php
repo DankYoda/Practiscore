@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Service\State\Provider\VIdeo;
+namespace App\Service\State\Provider\Video;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
@@ -14,7 +14,7 @@ readonly class VideoPostProvider implements ProviderInterface
 		private Security $security,
 	)
 	{
-	
+
 	}
 	public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
 	{

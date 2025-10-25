@@ -8,42 +8,53 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use App\Service\State\Provider\Score\ScoreGetCollectionProvider;
+use App\Service\State\Provider\Score\ScoreGetProvider;
+use App\Service\State\Provider\Score\ScorePostProvider;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Symfony\Component\Uid\Uuid;
 
 #[Get(
-	uriTemplate: '/user/{idUser}/score/{id}',
+	uriTemplate: '/gathering/{idGather}/user/{idUser}/score/{id}',
 	uriVariables: [
+		'idGather' => new Link(toProperty: 'gathering', fromClass: Gathering::class),
         'idUser' => new Link(toProperty: 'user', fromClass: User::class),
 		'id' => new Link(fromClass: Score::class),
     ],
+	provider: ScoreGetProvider::class
 )]
 #[GetCollection(
-	uriTemplate: '/user/{idUser}/score',
+	uriTemplate: '/gathering/{idGather}/user/{idUser}/score',
 	uriVariables: [
+		'idGather' => new Link(toProperty: 'gathering', fromClass: Gathering::class),
         'idUser' => new Link(toProperty: 'user', fromClass: User::class),
     ],
+	provider: ScoreGetCollectionProvider::class
 )]
 #[GetCollection(
-	uriTemplate: '/gathering/{idGathering}/score',
+	uriTemplate: '/gathering/{idGather}/score',
 	uriVariables: [
-        'idGathering' => new Link(toProperty: 'gathering', fromClass: Gathering::class),
+        'idGather' => new Link(toProperty: 'gathering', fromClass: Gathering::class),
     ],
 )]
 #[Post(
-	uriTemplate: '/user/{idUser}/score',
+	uriTemplate: '/gathering/{idGather}/user/{idUser}/score',
 	uriVariables: [
+        'idGather' => new Link(toProperty: 'gathering', fromClass: Gathering::class),
         'idUser' => new Link(toProperty: 'user', fromClass: User::class),
     ],
+	provider: ScorePostProvider::class
 )]
 #[Patch(
-	uriTemplate: '/user/{idUser}/score/{id}',
+	uriTemplate: '/gathering/{idGather}/user/{idUser}/score/{id}',
 	uriVariables: [
+		'idGather' => new Link(toProperty: 'gathering', fromClass: Gathering::class),
         'idUser' => new Link(toProperty: 'user', fromClass: User::class),
 		'id' => new Link(fromClass: Score::class),
     ],
+	provider: ScoreGetProvider::class
 )]
 #[ORM\Entity]
 class Score
@@ -73,9 +84,14 @@ class Score
 	#[JoinColumn(name: 'id_gathering', referencedColumnName: 'id', nullable: false)]
 	private Gathering $gathering;
 
-	public function __construct()
+	public function __construct(
+		User $user,
+		Gathering $gathering,
+	)
     {
         $this->id = Uuid::v4()->toRfc4122();
+		$this->user = $user;
+		$this->gathering = $gathering;
     }
 
 	public function getId(): string
@@ -132,4 +148,15 @@ class Score
 	{
 		$this->noShoot = $noShoot;
 	}
+
+	public function getGathering(): Gathering
+	{
+		return $this->gathering;
+	}
+
+	public function getUser(): User
+	{
+		return $this->user;
+	}
+
 }

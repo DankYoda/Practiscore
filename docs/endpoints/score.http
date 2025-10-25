@@ -1,0 +1,44 @@
+###GET score
+# @timeout 600 m
+# @no-cookie-jar
+GET http://localhost:8000/public/index.php/gathering/d130b129-1ebd-4d3f-948a-3ee8faa8b7f7/user/4cf44d06-2c88-45a0-9a34-f0930d21b16e/score/52146c59-b94f-4b54-bf5e-b8f489a6961a
+Accept: application/ld+json
+Cookie: {{cookie}}
+
+###GET Scores for person for gathering
+GET http://localhost:8000/public/index.php/gathering/d130b129-1ebd-4d3f-948a-3ee8faa8b7f7/user/4cf44d06-2c88-45a0-9a34-f0930d21b16e/score
+Accept: application/ld+json
+Cookie: {{cookie}}
+
+###GET Scores for a gathering
+GET http://localhost:8000/public/index.php/gathering/d130b129-1ebd-4d3f-948a-3ee8faa8b7f7/score
+Accept: application/ld+json
+Cookie: {{cookie}}
+
+###POST Scores for person
+POST http://localhost:8000/public/index.php/gathering/d130b129-1ebd-4d3f-948a-3ee8faa8b7f7/user/4cf44d06-2c88-45a0-9a34-f0930d21b16e/score
+Accept: application/ld+json
+Content-Type: application/ld+json
+Cookie: {{cookie}}
+
+{
+      "alpha": 29,
+      "charlie": 3,
+      "delta": 4,
+      "mike": 0,
+      "noShoot": 0
+}
+
+###PATCH current user
+PATCH http://localhost:8000/public/index.php/gathering/d130b129-1ebd-4d3f-948a-3ee8faa8b7f7/user/4cf44d06-2c88-45a0-9a34-f0930d21b16e/score/52146c59-b94f-4b54-bf5e-b8f489a6961a
+Accept: application/ld+json
+Content-Type: application/merge-patch+json
+Cookie: {{cookie}}
+
+{
+      "alpha": 29,
+      "charlie": 3,
+      "delta": 4,
+      "mike": 0,
+      "noShoot": 0
+}

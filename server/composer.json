@@ -25,6 +25,7 @@
         "symfony/console": "7.3.*",
         "symfony/dotenv": "7.3.*",
         "symfony/expression-language": "7.3.*",
+        "symfony/flex": "*",
         "symfony/form": "7.3.*",
         "symfony/framework-bundle": "7.3.*",
         "symfony/http-client": "7.3.*",
@@ -47,6 +48,7 @@
     },
     "config": {
         "allow-plugins": {
+            "symfony/flex": true,
             "symfony/runtime": true
         },
 	"optimize-autoloader": true,
@@ -75,10 +77,12 @@
         "symfony/polyfill-php84": "*"
     },
     "scripts": {
-	"auto-scripts": [
-            "@php bin/console cache:clear",
-            "@php bin/console assets:install"
-        ],
+	"auto-scripts": {
+            "0": "@php bin/console cache:clear",
+            "1": "@php bin/console assets:install",
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+        },
 	"post-install-cmd": [
 		    "@auto-scripts"
 	],

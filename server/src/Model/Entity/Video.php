@@ -9,7 +9,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
-use App\Service\State\Provider\VIdeo\VideoPostProvider;
+use App\Service\State\Provider\Video\ScoreGetProvider;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping as ORM;
@@ -34,7 +34,7 @@ use Symfony\Component\Uid\Uuid;
 	uriVariables: [
 		'idUser' => new Link(toProperty: 'user', fromClass: User::class),
 	],
-	provider: VideoPostProvider::class,
+	provider: ScoreGetProvider::class,
 )]
 #[Patch(
 	uriTemplate: '/user/{idUser}/video/{id}',
@@ -62,13 +62,13 @@ class Video
 	private readonly string $id;
 	#[ORM\Column]
 	private string $url;
-	
+
 	#[ORM\Column]
 	private string $description;
 	#[OneToOne(targetEntity: User::class)]
 	#[JoinColumn(name: 'id_user', referencedColumnName: 'id', nullable: true)]
 	private User $user;
-	
+
 	public function __construct(
 		string $url,
 		string $description,
@@ -80,40 +80,40 @@ class Video
 		$this->description = $description;
 		$this->user = $user;
 	}
-	
+
 	public function getId(): string
 	{
 		return $this->id;
 	}
-	
+
 	public function getUrl(): string
 	{
 		return $this->url;
 	}
-	
+
 	public function getUser(): User
 	{
 		return $this->user;
 	}
-	
+
 	public function setUser(User $user): void
 	{
 		$this->user = $user;
 	}
-	
+
 	public function getDescription(): string
 	{
 		return $this->description;
 	}
-	
+
 	public function setUrl(string $url): void
 	{
 		$this->url = $url;
 	}
-	
+
 	public function setDescription(string $description): void
 	{
 		$this->description = $description;
 	}
-	
+
 }
