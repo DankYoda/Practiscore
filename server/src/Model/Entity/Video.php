@@ -9,7 +9,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
-use App\Service\State\Provider\Video\ScoreGetProvider;
+use App\Service\State\Provider\Video\VideoPostProvider;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping as ORM;
@@ -34,7 +34,7 @@ use Symfony\Component\Uid\Uuid;
 	uriVariables: [
 		'idUser' => new Link(toProperty: 'user', fromClass: User::class),
 	],
-	provider: ScoreGetProvider::class,
+	provider: VideoPostProvider::class,
 )]
 #[Patch(
 	uriTemplate: '/user/{idUser}/video/{id}',
