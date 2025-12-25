@@ -2,8 +2,7 @@ services:
   angular-prod:
     build:
       context: .
-      dockerfile: Dockerfile
-    image: docker-angular-sample
+      dockerfile: Dockerfile.prod
     ports:
       - "8080:8080"
 
