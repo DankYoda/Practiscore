@@ -66,16 +66,16 @@ class Registration
 	)]
 	#[Groups(['user:default:read'])]
 	private readonly string $id;
-	#[ORM\Column]
+	#[ORM\Column(length: 255)]
 	#[Groups(['user:default:read'])]
 	private ?string $division;
-	#[ORM\Column]
+	#[ORM\Column(length: 255)]
 	#[Groups(['user:default:read'])]
 	private ?string $classification;
-	#[ORM\Column]
+	#[ORM\Column(length: 255)]
 	#[Groups(['user:default:read'])]
 	private ?string $powerFactor;
-	#[ORM\Column]
+	#[ORM\Column(length: 255)]
 	#[Groups(['user:default:read'])]
 	private string $memberNumber = '';
 	#[ORM\Column]

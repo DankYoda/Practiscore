@@ -1,0 +1,35 @@
+@if (loading()) {
+  <app-loading-spinner></app-loading-spinner>
+} @else if (error()) {
+  <app-error-message [error]="error()!"></app-error-message>
+} @else if (club(); as c) {
+  <div class="club-detail__header">
+    <div>
+      <h1>{{ c.name }}</h1>
+      <p>{{ c.address }}</p>
+      @if (c.website) {
+        <p><a [href]="c.website" target="_blank" rel="noopener">{{ c.website }}</a></p>
+      }
+    </div>
+    @if (auth.managesClub(c.id)) {
+      <a mat-stroked-button [routerLink]="['/clubs', c.id, 'edit']">
+        <mat-icon>edit</mat-icon>
+        Edit club
+      </a>
+    }
+  </div>
+
+  <h2>Upcoming matches</h2>
+  @if (gatherings().length === 0) {
+    <p>No matches scheduled at this club yet.</p>
+  } @else {
+    <mat-card appearance="outlined">
+      @for (g of gatherings(); track g.id) {
+        <a class="club-detail__gathering" [routerLink]="['/matches', g.id]">
+          <span>{{ g.description }}</span>
+          <span class="club-detail__gathering-date">{{ g.startDate | date: 'mediumDate' }}</span>
+        </a>
+      }
+    </mat-card>
+  }
+}

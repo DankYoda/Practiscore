@@ -46,7 +46,13 @@ security:
          - { path: ^/user/[a-zA-Z0-9-]+/password/reset$, roles: PUBLIC_ACCESS }
          - { path: ^/user/.+/password/reset/send$, roles: PUBLIC_ACCESS }
          - { path: ^/user/[a-zA-Z0-9-]+/email/change$, roles: IS_AUTHENTICATED }
+         - { path: ^/user/[a-zA-Z0-9-]+/profile$, roles: PUBLIC_ACCESS, methods: [GET] }
          - { path: ^/logout, roles: IS_AUTHENTICATED }
+         - { path: ^/club, roles: PUBLIC_ACCESS, methods: [GET] }
+         - { path: ^/gathering, roles: PUBLIC_ACCESS, methods: [GET] }
+         - { path: ^/match_type, roles: PUBLIC_ACCESS, methods: [GET] }
+         - { path: ^/division, roles: PUBLIC_ACCESS, methods: [GET] }
+         - { path: ^/classification, roles: PUBLIC_ACCESS, methods: [GET] }
          - { path: ^/, roles: [IS_AUTHENTICATED_FULLY] }
 
 when@test:

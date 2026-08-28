@@ -1,0 +1,24 @@
+<h1>Scores</h1>
+<p>Find a match to view its results.</p>
+
+<mat-form-field appearance="outline">
+  <mat-label>Search matches</mat-label>
+  <input matInput [ngModel]="search()" (ngModelChange)="search.set($event)" placeholder="City or description" />
+</mat-form-field>
+
+@if (loading()) {
+  <app-loading-spinner></app-loading-spinner>
+} @else if (error()) {
+  <app-error-message [error]="error()!"></app-error-message>
+} @else if (filtered().length === 0) {
+  <p>No matches found.</p>
+} @else {
+  <mat-nav-list>
+    @for (g of filtered(); track g.id) {
+      <a mat-list-item [routerLink]="['/scores/gathering', g.id]">
+        <span matListItemTitle>{{ g.description }}</span>
+        <span matListItemLine>{{ g.city }}, {{ g.state }} &middot; {{ g.startDate | date: 'mediumDate' }}</span>
+      </a>
+    }
+  </mat-nav-list>
+}

@@ -1,0 +1,42 @@
+.shell {
+  height: 100%;
+}
+
+.shell__nav {
+  width: 240px;
+}
+
+.shell__toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  gap: 8px;
+}
+
+.shell__brand {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.shell__spacer {
+  flex: 1 1 auto;
+}
+
+.shell__username {
+  opacity: 0.85;
+  margin-right: 4px;
+}
+
+.shell__link--active {
+  --mat-list-item-label-text-color: var(--mat-sys-primary);
+  font-weight: 500;
+}
+
+.shell__content {
+  padding: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}

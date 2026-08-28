@@ -1,0 +1,18 @@
+.my-videos__form {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.my-videos__description {
+  flex: 1;
+  min-width: 220px;
+}
+
+.my-videos__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}

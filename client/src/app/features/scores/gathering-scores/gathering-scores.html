@@ -1,0 +1,43 @@
+@if (loading()) {
+  <app-loading-spinner></app-loading-spinner>
+} @else if (error()) {
+  <app-error-message [error]="error()!"></app-error-message>
+} @else if (gathering(); as g) {
+  <h1>{{ g.description }} results</h1>
+  <p><a [routerLink]="['/matches', g.id]">View match details</a></p>
+
+  @if (scores().length === 0) {
+    <p>No scores posted yet.</p>
+  } @else {
+    <table mat-table [dataSource]="scores()" class="mat-elevation-z1">
+      <ng-container matColumnDef="shooter">
+        <th mat-header-cell *matHeaderCellDef>Shooter</th>
+        <td mat-cell *matCellDef="let s">
+          <a [routerLink]="['/shooters', relationId(s.user)]">{{ relationId(s.user) }}</a>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="alpha">
+        <th mat-header-cell *matHeaderCellDef>A</th>
+        <td mat-cell *matCellDef="let s">{{ s.alpha }}</td>
+      </ng-container>
+      <ng-container matColumnDef="charlie">
+        <th mat-header-cell *matHeaderCellDef>C</th>
+        <td mat-cell *matCellDef="let s">{{ s.charlie }}</td>
+      </ng-container>
+      <ng-container matColumnDef="delta">
+        <th mat-header-cell *matHeaderCellDef>D</th>
+        <td mat-cell *matCellDef="let s">{{ s.delta }}</td>
+      </ng-container>
+      <ng-container matColumnDef="mike">
+        <th mat-header-cell *matHeaderCellDef>M</th>
+        <td mat-cell *matCellDef="let s">{{ s.mike }}</td>
+      </ng-container>
+      <ng-container matColumnDef="noShoot">
+        <th mat-header-cell *matHeaderCellDef>NS</th>
+        <td mat-cell *matCellDef="let s">{{ s.noShoot }}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns"></tr>
+    </table>
+  }
+}

@@ -1,0 +1,57 @@
+<mat-sidenav-container class="shell">
+  <mat-sidenav
+    #drawer
+    class="shell__nav"
+    [mode]="isHandset() ? 'over' : 'side'"
+    [opened]="!isHandset()"
+  >
+    <mat-nav-list>
+      @for (link of navLinks; track link.path) {
+        <a
+          mat-list-item
+          [routerLink]="link.path"
+          routerLinkActive="shell__link--active"
+          (click)="isHandset() && drawer.close()"
+        >
+          <mat-icon matListItemIcon>{{ link.icon }}</mat-icon>
+          <span matListItemTitle>{{ link.label }}</span>
+        </a>
+      }
+
+      @if (auth.isAuthenticated()) {
+        <a
+          mat-list-item
+          routerLink="/profile"
+          routerLinkActive="shell__link--active"
+          (click)="isHandset() && drawer.close()"
+        >
+          <mat-icon matListItemIcon>person</mat-icon>
+          <span matListItemTitle>Profile</span>
+        </a>
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="shell__toolbar">
+      @if (isHandset()) {
+        <button mat-icon-button (click)="drawer.toggle()" aria-label="Toggle navigation">
+          <mat-icon>menu</mat-icon>
+        </button>
+      }
+      <a routerLink="/" class="shell__brand">PractiScore</a>
+      <span class="shell__spacer"></span>
+      @if (auth.isAuthenticated()) {
+        <span class="shell__username">{{ auth.currentUser()?.username }}</span>
+        <button mat-button (click)="logout()">Log out</button>
+      } @else {
+        <a mat-button routerLink="/login">Log in</a>
+        <a mat-flat-button routerLink="/register">Sign up</a>
+      }
+    </mat-toolbar>
+
+    <main class="shell__content">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

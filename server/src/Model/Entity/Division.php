@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 )]
 class Division {
 	#[ORM\Id]
-	#[ORM\Column]
+	#[ORM\Column(length: 255)]
 	#[Groups(['match_type:default:read'])]
 	private string $name;
 	#[ORM\ManyToOne(targetEntity: MatchType::class, inversedBy: "divisions")]

@@ -1,0 +1,47 @@
+@if (loading()) {
+  <app-loading-spinner></app-loading-spinner>
+} @else if (error()) {
+  <app-error-message [error]="error()!"></app-error-message>
+} @else if (gathering(); as g) {
+  <h1>Register for {{ g.description }}</h1>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="registration-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Division</mat-label>
+      <mat-select formControlName="division">
+        @for (division of matchType()?.divisions ?? []; track division.name) {
+          <mat-option [value]="division.name">{{ division.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Classification</mat-label>
+      <mat-select formControlName="classification">
+        @for (classification of matchType()?.classifications ?? []; track classification.name) {
+          <mat-option [value]="classification.name">{{ classification.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Power factor</mat-label>
+      <mat-select formControlName="powerFactor">
+        <mat-option value="MAJOR">Major</mat-option>
+        <mat-option value="MINOR">Minor</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Member number</mat-label>
+      <input matInput formControlName="memberNumber" />
+    </mat-form-field>
+
+    <div class="registration-form__actions">
+      <a mat-button [routerLink]="['/matches', g.id]">Cancel</a>
+      <button mat-flat-button type="submit" [disabled]="form.invalid || saving()">
+        Register
+      </button>
+    </div>
+  </form>
+}

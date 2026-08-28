@@ -1,0 +1,10 @@
+.gathering-form {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(140px, 1fr));
+  gap: 4px 16px;
+  max-width: 720px;
+}
+
+.gathering-form__full {
+  grid-column: 1 / -1;
+}

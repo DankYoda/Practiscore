@@ -1,0 +1,32 @@
+<div class="auth-page">
+  <mat-card appearance="outlined" class="auth-card">
+    <mat-card-header>
+      <mat-card-title>Log in</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      @if (error()) {
+        <app-error-message [error]="error()!"></app-error-message>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="submit()" class="auth-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username" autocomplete="username" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" autocomplete="current-password" />
+        </mat-form-field>
+
+        <button mat-flat-button type="submit" [disabled]="form.invalid || submitting()">
+          Log in
+        </button>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <span>New here?</span>
+      <a routerLink="/register">Create an account</a>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -1,0 +1,50 @@
+@if (loading()) {
+  <app-loading-spinner></app-loading-spinner>
+} @else if (error()) {
+  <app-error-message [error]="error()!"></app-error-message>
+} @else if (registrations().length === 0) {
+  <p>You haven't registered for any matches yet.</p>
+} @else {
+  <mat-accordion>
+    @for (r of registrations(); track r.id) {
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <a [routerLink]="['/matches', gatheringId(r)]" (click)="$event.stopPropagation()">
+              {{ gatheringId(r) }}
+            </a>
+          </mat-panel-title>
+          <mat-panel-description>{{ r.division }} &middot; {{ r.classification }}</mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <form [formGroup]="formFor(r.id)" (ngSubmit)="save(r)" class="my-registrations__form">
+          <mat-form-field appearance="outline">
+            <mat-label>Division</mat-label>
+            <input matInput formControlName="division" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Classification</mat-label>
+            <input matInput formControlName="classification" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Power factor</mat-label>
+            <input matInput formControlName="powerFactor" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Member number</mat-label>
+            <input matInput formControlName="memberNumber" />
+          </mat-form-field>
+
+          <div class="my-registrations__actions">
+            <button mat-button type="button" color="warn" (click)="cancel(r)">
+              Cancel registration
+            </button>
+            <button mat-flat-button type="submit" [disabled]="formFor(r.id).invalid || savingId() === r.id">
+              Save
+            </button>
+          </div>
+        </form>
+      </mat-expansion-panel>
+    }
+  </mat-accordion>
+}

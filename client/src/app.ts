@@ -1,13 +1,10 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
+import { Component } from '@angular/core';
+import { Shell } from './app/core/layout/shell/shell';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MatCardHeader, MatCard, MatCardTitle, MatCardContent, MatCardActions],
+  imports: [Shell],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
-export class App {
-  protected readonly title = signal('client');
-}
+export class App {}

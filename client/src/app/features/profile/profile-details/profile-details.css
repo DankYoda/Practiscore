@@ -1,0 +1,23 @@
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 640px;
+}
+
+.profile-details__form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(140px, 1fr));
+  gap: 4px 16px;
+}
+
+.profile-details__full {
+  grid-column: 1 / -1;
+}
+
+.profile-details__inline-form {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}

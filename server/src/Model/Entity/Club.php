@@ -40,22 +40,23 @@ class Club{
 	)]
 	#[Groups(['user:default:read'])]
 	private readonly string $id;
-	#[ORM\Column]
+	#[ORM\Column(length: 255)]
 	#[Groups(['user:default:read'])]
 	private string $name;
 	#[ORM\Column(
+		length: 255,
 		unique: true,
 	)]
 	#[Assert\Email]
 	#[Groups(['user:default:read'])]
 	private string $email;
-	#[ORM\Column]
+	#[ORM\Column(length: 255)]
 	#[Groups(['user:default:read'])]
 	private string $address;
-	#[ORM\Column]
+	#[ORM\Column(length: 255)]
 	#[Groups(['user:default:read'])]
 	private string $socials = '';
-	#[ORM\Column]
+	#[ORM\Column(length: 255)]
 	#[Groups(['user:default:read'])]
 	private string $website = '';
 	

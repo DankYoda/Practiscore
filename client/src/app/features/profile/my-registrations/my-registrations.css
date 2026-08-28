@@ -1,0 +1,12 @@
+.my-registrations__form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(140px, 1fr));
+  gap: 4px 16px;
+  padding-top: 8px;
+}
+
+.my-registrations__actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+}

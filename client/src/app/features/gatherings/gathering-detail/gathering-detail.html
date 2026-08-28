@@ -1,0 +1,110 @@
+@if (loading()) {
+  <app-loading-spinner></app-loading-spinner>
+} @else if (error()) {
+  <app-error-message [error]="error()!"></app-error-message>
+} @else if (gathering(); as g) {
+  <div class="gathering-detail__header">
+    <div>
+      <h1>{{ g.description }}</h1>
+      <p>{{ g.address }}, {{ g.city }}, {{ g.state }} {{ g.country }}</p>
+      <p>
+        {{ g.startDate | date: 'medium' }} &ndash; {{ g.endDate | date: 'medium' }}
+      </p>
+      <p class="gathering-detail__meta">
+        {{ g.eventType }} &middot; {{ g.matchType }} &middot; {{ g.price | currency }}
+      </p>
+      @if (clubId()) {
+        <a [routerLink]="['/clubs', clubId()]">View hosting club</a>
+      }
+    </div>
+
+    <div class="gathering-detail__actions">
+      @if (auth.managesClub(clubId())) {
+        <a mat-stroked-button [routerLink]="['/matches', g.id, 'edit']">
+          <mat-icon>edit</mat-icon>
+          Edit match
+        </a>
+      }
+      @if (auth.isAuthenticated() && !isAlreadyRegistered()) {
+        <a mat-flat-button [routerLink]="['/matches', g.id, 'register']">Register</a>
+      }
+      @if (isAlreadyRegistered()) {
+        <span class="gathering-detail__registered">
+          <mat-icon>check_circle</mat-icon>
+          You're registered
+        </span>
+        <a mat-stroked-button [routerLink]="['/matches', g.id, 'score']">Manage my score</a>
+      }
+    </div>
+  </div>
+
+  @if (g.waiver) {
+    <mat-card appearance="outlined" class="gathering-detail__section">
+      <mat-card-content>{{ g.waiver }}</mat-card-content>
+    </mat-card>
+  }
+
+  <h2>Roster ({{ registrations().length }})</h2>
+  @if (registrations().length === 0) {
+    <p>No one has registered yet.</p>
+  } @else {
+    <table mat-table [dataSource]="registrations()" class="mat-elevation-z1">
+      <ng-container matColumnDef="shooter">
+        <th mat-header-cell *matHeaderCellDef>Shooter</th>
+        <td mat-cell *matCellDef="let r">
+          <a [routerLink]="['/shooters', relationId(r.user)]">{{ relationId(r.user) }}</a>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="division">
+        <th mat-header-cell *matHeaderCellDef>Division</th>
+        <td mat-cell *matCellDef="let r">{{ r.division }}</td>
+      </ng-container>
+      <ng-container matColumnDef="classification">
+        <th mat-header-cell *matHeaderCellDef>Class</th>
+        <td mat-cell *matCellDef="let r">{{ r.classification }}</td>
+      </ng-container>
+      <ng-container matColumnDef="memberNumber">
+        <th mat-header-cell *matHeaderCellDef>Member #</th>
+        <td mat-cell *matCellDef="let r">{{ r.memberNumber }}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="registrationColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: registrationColumns"></tr>
+    </table>
+  }
+
+  <h2>Results ({{ scores().length }})</h2>
+  @if (scores().length === 0) {
+    <p>No scores posted yet.</p>
+  } @else {
+    <table mat-table [dataSource]="scores()" class="mat-elevation-z1">
+      <ng-container matColumnDef="shooter">
+        <th mat-header-cell *matHeaderCellDef>Shooter</th>
+        <td mat-cell *matCellDef="let s">
+          <a [routerLink]="['/shooters', relationId(s.user)]">{{ relationId(s.user) }}</a>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="alpha">
+        <th mat-header-cell *matHeaderCellDef>A</th>
+        <td mat-cell *matCellDef="let s">{{ s.alpha }}</td>
+      </ng-container>
+      <ng-container matColumnDef="charlie">
+        <th mat-header-cell *matHeaderCellDef>C</th>
+        <td mat-cell *matCellDef="let s">{{ s.charlie }}</td>
+      </ng-container>
+      <ng-container matColumnDef="delta">
+        <th mat-header-cell *matHeaderCellDef>D</th>
+        <td mat-cell *matCellDef="let s">{{ s.delta }}</td>
+      </ng-container>
+      <ng-container matColumnDef="mike">
+        <th mat-header-cell *matHeaderCellDef>M</th>
+        <td mat-cell *matCellDef="let s">{{ s.mike }}</td>
+      </ng-container>
+      <ng-container matColumnDef="noShoot">
+        <th mat-header-cell *matHeaderCellDef>NS</th>
+        <td mat-cell *matCellDef="let s">{{ s.noShoot }}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="scoreColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: scoreColumns"></tr>
+    </table>
+  }
+}

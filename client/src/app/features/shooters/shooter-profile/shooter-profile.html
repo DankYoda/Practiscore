@@ -1,0 +1,39 @@
+@if (loading()) {
+  <app-loading-spinner></app-loading-spinner>
+} @else if (error()) {
+  <app-error-message [error]="error()!"></app-error-message>
+} @else if (profile(); as p) {
+  <div class="shooter-profile__header">
+    <h1>{{ p.firstName }} {{ p.lastName }}</h1>
+    <p class="shooter-profile__username">&#64;{{ p.username }}</p>
+    @if (p.titles) {
+      <p>{{ p.titles }}</p>
+    }
+  </div>
+
+  <mat-card appearance="outlined">
+    <mat-card-content>
+      @if (p.homeClub) {
+        <p>
+          Home club:
+          <a [routerLink]="['/clubs', relationId(p.homeClub)]">{{ relationId(p.homeClub) }}</a>
+        </p>
+      }
+      @if (p.guns) {
+        <p><strong>Guns:</strong> {{ p.guns }}</p>
+      }
+      @if (p.optics) {
+        <p><strong>Optics:</strong> {{ p.optics }}</p>
+      }
+      @if (p.ammo) {
+        <p><strong>Ammo:</strong> {{ p.ammo }}</p>
+      }
+      @if (p.instagramHandle) {
+        <p><strong>Instagram:</strong> &#64;{{ p.instagramHandle }}</p>
+      }
+      @if (p.bio) {
+        <p>{{ p.bio }}</p>
+      }
+    </mat-card-content>
+  </mat-card>
+}

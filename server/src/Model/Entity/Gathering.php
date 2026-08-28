@@ -55,15 +55,15 @@ class Gathering
 		]
 	)]
 	private readonly string $id;
-	#[ORM\Column]
+	#[ORM\Column(length: 255)]
 	private string $address;
-	#[ORM\Column]
+	#[ORM\Column(length: 255)]
 	private string $state;
-	#[ORM\Column]
+	#[ORM\Column(length: 255)]
 	private string $city;
-	#[ORM\Column]
+	#[ORM\Column(length: 255)]
 	private string $country;
-	#[ORM\Column]
+	#[ORM\Column(length: 255)]
 	private string $description;
 	#[ORM\Column(
 		type: Types::DATETIME_IMMUTABLE
@@ -83,11 +83,11 @@ class Gathering
 	private DateTimeImmutable $endDate;
 	#[ORM\Column]
 	private float $price = 0;
-	#[ORM\Column]
+	#[ORM\Column(length: 255)]
 	private string $waiver;
-	#[ORM\Column]
+	#[ORM\Column(length: 255)]
 	private string $eventType;
-	#[ORM\Column]
+	#[ORM\Column(length: 255)]
 	private string $matchType;
 	#[ManyToOne(targetEntity: Club::class, inversedBy: 'gatherings')]
 	#[JoinColumn(name: 'id_club', referencedColumnName: 'id', nullable: false)]

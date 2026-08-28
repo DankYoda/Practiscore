@@ -1,0 +1,40 @@
+<h1>Edit club</h1>
+
+@if (loading()) {
+  <app-loading-spinner></app-loading-spinner>
+} @else {
+  @if (error()) {
+    <app-error-message [error]="error()!"></app-error-message>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="save()" class="club-edit-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Address</mat-label>
+      <input matInput formControlName="address" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Socials</mat-label>
+      <input matInput formControlName="socials" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Website</mat-label>
+      <input matInput formControlName="website" />
+    </mat-form-field>
+
+    <button mat-flat-button type="submit" [disabled]="form.invalid || saving()">
+      Save changes
+    </button>
+  </form>
+}

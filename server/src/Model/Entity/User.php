@@ -20,6 +20,7 @@ use App\Service\State\Processor\User\SendResetPasswordProcessor;
 use App\Service\State\Processor\User\UserChangeEmailProcessor;
 use App\Service\State\Processor\User\UserRegisterProcessor;
 use App\Service\State\Processor\User\UserVerifyProcessor;
+use App\Service\State\Provider\User\CurrentUserProvider;
 use App\Service\State\Provider\User\SendPasswordResetProvider;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -33,17 +34,34 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
 #[Get(
+    uriTemplate: '/user/me',
+    normalizationContext: ['groups' => ['user:default:read']],
+    security: "is_granted('IS_AUTHENTICATED_FULLY')",
+    provider: CurrentUserProvider::class,
+)]
+#[Get(
     uriTemplate: '/user/{id}',
     uriVariables: [
         'id' => new Link(fromClass: User::class),
     ],
+    requirements: ['id' => Requirement::UUID],
     normalizationContext: ['groups' => ['user:default:read']],
     security: "is_granted('ROLE_ADMIN') or object === user",
+)]
+#[Get(
+    uriTemplate: '/user/{id}/profile',
+    uriVariables: [
+        'id' => new Link(fromClass: User::class),
+    ],
+    requirements: ['id' => Requirement::UUID],
+    normalizationContext: ['groups' => ['user:public:read']],
+    security: "is_granted('PUBLIC_ACCESS')",
 )]
 #[GetCollection(
     uriTemplate: '/user',
@@ -55,6 +73,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     uriVariables: [
         'userId' => new Link(fromClass: User::class)
     ],
+    normalizationContext: ['groups' => ['user:default:read']],
     denormalizationContext: ['groups' => ['user:patch:write']],
     security: "is_granted('ROLE_ADMIN') or object === user",
 )]
@@ -130,29 +149,36 @@ class User implements UserInterface, PasswordUpgraderInterface, PasswordAuthenti
 		    'fixed' => true,
 		]
     )]
-    #[Groups(['user:default:read'])]
+    #[Groups(['user:default:read', 'user:public:read'])]
     private readonly string $id;
-    #[ORM\Column]
+    #[ORM\Column(length: 255)]
     #[Groups([
 		'user:default:read',
 	    'user:post:write:register',
+	    'user:public:read',
+	    'user:patch:write',
     ])]
     private string $firstName = '';
-    #[ORM\Column]
+    #[ORM\Column(length: 255)]
     #[Groups([
 		'user:default:read',
 	    'user:post:write:register',
+	    'user:public:read',
+	    'user:patch:write',
     ])]
     private string $lastName = '';
     #[ORM\Column(
+        length: 255,
         unique: true,
     )]
     #[Groups([
 		'user:default:read',
 		'user:post:write:register',
+		'user:public:read',
     ])]
     private string $username;
     #[ORM\Column(
+        length: 255,
         unique: true,
     )]
     #[Groups([
@@ -167,43 +193,56 @@ class User implements UserInterface, PasswordUpgraderInterface, PasswordAuthenti
 	])]
 	private bool $emailVerified = false;
     #[ORM\Column(
+        length: 255,
         nullable: false
     )]
     private string $password = '';
-    #[ORM\Column]
+    #[ORM\Column(length: 255)]
     #[Groups([
 		'user:default:read',
 	    'user:post:write:register',
+	    'user:public:read',
+	    'user:patch:write',
     ])]
     private string $titles;
-    #[ORM\Column]
+    #[ORM\Column(length: 255)]
     #[Groups([
 		'user:default:read',
 	    'user:post:write:register',
+	    'user:public:read',
+	    'user:patch:write',
     ])]
     private string $guns = '';
-    #[ORM\Column]
+    #[ORM\Column(length: 255)]
     #[Groups([
 		'user:default:read',
 	    'user:post:write:register',
+	    'user:public:read',
+	    'user:patch:write',
     ])]
     private string $optics = '';
-    #[ORM\Column]
+    #[ORM\Column(length: 255)]
     #[Groups([
 		'user:default:read',
 	    'user:post:write:register',
+	    'user:public:read',
+	    'user:patch:write',
     ])]
     private string $ammo = '';
-    #[ORM\Column]
+    #[ORM\Column(length: 255)]
     #[Groups([
 		'user:default:read',
 	    'user:post:write:register',
+	    'user:public:read',
+	    'user:patch:write',
     ])]
     private string $instagramHandle = '';
-    #[ORM\Column]
+    #[ORM\Column(length: 255)]
     #[Groups([
 		'user:default:read',
 	    'user:post:write:register',
+	    'user:public:read',
+	    'user:patch:write',
     ])]
     private string $bio = '';
 	#[ORM\Column]
@@ -223,7 +262,7 @@ class User implements UserInterface, PasswordUpgraderInterface, PasswordAuthenti
 	
 	#[OneToOne(targetEntity: Club::class)]
 	#[JoinColumn(name: 'id_home_club', referencedColumnName: 'id', nullable: true)]
-	#[Groups(['user:default:read'])]
+	#[Groups(['user:default:read', 'user:public:read'])]
 	private ?Club $homeClub = null;
 	#[OneToOne(targetEntity: Club::class)]
 	#[JoinColumn(name: 'id_managed_club', referencedColumnName: 'id', nullable: true)]

@@ -1,0 +1,37 @@
+@if (loading()) {
+  <app-loading-spinner></app-loading-spinner>
+} @else if (error()) {
+  <app-error-message [error]="error()!"></app-error-message>
+} @else if (gathering(); as g) {
+  <h1>Your score &mdash; {{ g.description }}</h1>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="score-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Alpha</mat-label>
+      <input matInput type="number" formControlName="alpha" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Charlie</mat-label>
+      <input matInput type="number" formControlName="charlie" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Delta</mat-label>
+      <input matInput type="number" formControlName="delta" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Mike</mat-label>
+      <input matInput type="number" formControlName="mike" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>No-shoots</mat-label>
+      <input matInput type="number" formControlName="noShoot" />
+    </mat-form-field>
+
+    <div class="score-form__actions">
+      <a mat-button [routerLink]="['/matches', g.id]">Cancel</a>
+      <button mat-flat-button type="submit" [disabled]="form.invalid || saving()">
+        Save score
+      </button>
+    </div>
+  </form>
+}

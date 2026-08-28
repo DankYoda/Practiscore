@@ -1,0 +1,20 @@
+.my-scores__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.my-scores__row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  border: 1px solid var(--mat-sys-outline-variant, #ddd);
+  border-radius: 8px;
+  flex-wrap: wrap;
+}
+
+.my-scores__row > span:nth-child(2) {
+  flex: 1;
+  opacity: 0.8;
+}

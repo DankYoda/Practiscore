@@ -1,0 +1,22 @@
+<h1>Clubs</h1>
+
+@if (loading()) {
+  <app-loading-spinner></app-loading-spinner>
+} @else if (error()) {
+  <app-error-message [error]="error()!"></app-error-message>
+} @else if (clubs().length === 0) {
+  <p>No clubs yet.</p>
+} @else {
+  <div class="club-grid">
+    @for (club of clubs(); track club.id) {
+      <a [routerLink]="[club.id]" class="club-card-link">
+        <mat-card class="club-card" appearance="outlined">
+          <mat-card-header>
+            <mat-card-title>{{ club.name }}</mat-card-title>
+            <mat-card-subtitle>{{ club.address }}</mat-card-subtitle>
+          </mat-card-header>
+        </mat-card>
+      </a>
+    }
+  </div>
+}

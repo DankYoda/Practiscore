@@ -1,0 +1,27 @@
+@if (loading()) {
+  <app-loading-spinner></app-loading-spinner>
+} @else if (error()) {
+  <app-error-message [error]="error()!"></app-error-message>
+} @else if (rows().length === 0) {
+  <p>Register for a match to start tracking scores.</p>
+} @else {
+  <div class="my-scores__list">
+    @for (row of rows(); track row.gatheringId) {
+      <div class="my-scores__row">
+        <a [routerLink]="['/matches', row.gatheringId]">{{ row.gatheringId }}</a>
+        @if (row.scores.length === 0) {
+          <span>No score submitted yet</span>
+        } @else {
+          <span>
+            @for (s of row.scores; track s.id) {
+              A{{ s.alpha }} C{{ s.charlie }} D{{ s.delta }} M{{ s.mike }} NS{{ s.noShoot }}
+            }
+          </span>
+        }
+        <a mat-stroked-button [routerLink]="['/matches', row.gatheringId, 'score']">
+          {{ row.scores.length === 0 ? 'Add score' : 'Edit score' }}
+        </a>
+      </div>
+    }
+  </div>
+}

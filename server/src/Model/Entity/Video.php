@@ -60,10 +60,10 @@ class Video
 		]
 	)]
 	private readonly string $id;
-	#[ORM\Column]
+	#[ORM\Column(length: 255)]
 	private string $url;
 
-	#[ORM\Column]
+	#[ORM\Column(length: 255)]
 	private string $description;
 	#[OneToOne(targetEntity: User::class)]
 	#[JoinColumn(name: 'id_user', referencedColumnName: 'id', nullable: true)]

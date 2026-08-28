@@ -1,0 +1,98 @@
+<div class="profile-details">
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>Profile details</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      @if (detailsError()) {
+        <app-error-message [error]="detailsError()!"></app-error-message>
+      }
+      <form [formGroup]="detailsForm" (ngSubmit)="saveDetails()" class="profile-details__form">
+        <mat-form-field appearance="outline">
+          <mat-label>First name</mat-label>
+          <input matInput formControlName="firstName" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Last name</mat-label>
+          <input matInput formControlName="lastName" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Titles</mat-label>
+          <input matInput formControlName="titles" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Guns</mat-label>
+          <input matInput formControlName="guns" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Optics</mat-label>
+          <input matInput formControlName="optics" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Ammo</mat-label>
+          <input matInput formControlName="ammo" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Instagram</mat-label>
+          <input matInput formControlName="instagramHandle" />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="profile-details__full">
+          <mat-label>Bio</mat-label>
+          <textarea matInput formControlName="bio" rows="3"></textarea>
+        </mat-form-field>
+        <button
+          mat-flat-button
+          type="submit"
+          class="profile-details__full"
+          [disabled]="detailsForm.invalid || savingDetails()"
+        >
+          Save details
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>Email</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      @if (emailError()) {
+        <app-error-message [error]="emailError()!"></app-error-message>
+      }
+      <form [formGroup]="emailForm" (ngSubmit)="saveEmail()" class="profile-details__inline-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" />
+        </mat-form-field>
+        <button mat-stroked-button type="submit" [disabled]="emailForm.invalid || savingEmail()">
+          Update email
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>Password</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      @if (passwordError()) {
+        <app-error-message [error]="passwordError()!"></app-error-message>
+      }
+      <form [formGroup]="passwordForm" (ngSubmit)="savePassword()" class="profile-details__inline-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Current password</mat-label>
+          <input matInput type="password" formControlName="oldPassword" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>New password</mat-label>
+          <input matInput type="password" formControlName="newPassword" />
+        </mat-form-field>
+        <button mat-stroked-button type="submit" [disabled]="passwordForm.invalid || savingPassword()">
+          Update password
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

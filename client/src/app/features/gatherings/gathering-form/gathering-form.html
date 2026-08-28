@@ -1,0 +1,79 @@
+<h1>{{ editingId ? 'Edit match' : 'New match' }}</h1>
+
+@if (loading()) {
+  <app-loading-spinner></app-loading-spinner>
+} @else {
+  @if (error()) {
+    <app-error-message [error]="error()!"></app-error-message>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="save()" class="gathering-form">
+    <mat-form-field appearance="outline" class="gathering-form__full">
+      <mat-label>Description</mat-label>
+      <input matInput formControlName="description" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="gathering-form__full">
+      <mat-label>Address</mat-label>
+      <input matInput formControlName="address" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>City</mat-label>
+      <input matInput formControlName="city" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>State</mat-label>
+      <input matInput formControlName="state" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Country</mat-label>
+      <input matInput formControlName="country" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Registration opens</mat-label>
+      <input matInput type="date" formControlName="openDate" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Registration closes</mat-label>
+      <input matInput type="date" formControlName="closeDate" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Match starts</mat-label>
+      <input matInput type="date" formControlName="startDate" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Match ends</mat-label>
+      <input matInput type="date" formControlName="endDate" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Event type</mat-label>
+      <input matInput formControlName="eventType" placeholder="match, class, etc." />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Match type</mat-label>
+      <mat-select formControlName="matchType">
+        @for (type of matchTypes(); track type.name) {
+          <mat-option [value]="type.name">{{ type.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="gathering-form__full">
+      <mat-label>Waiver</mat-label>
+      <textarea matInput formControlName="waiver" rows="3"></textarea>
+    </mat-form-field>
+
+    <button mat-flat-button type="submit" [disabled]="form.invalid || saving()" class="gathering-form__full">
+      {{ editingId ? 'Save changes' : 'Create match' }}
+    </button>
+  </form>
+}

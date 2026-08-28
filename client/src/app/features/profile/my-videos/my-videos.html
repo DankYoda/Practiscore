@@ -1,0 +1,37 @@
+@if (error()) {
+  <app-error-message [error]="error()!"></app-error-message>
+}
+
+<form [formGroup]="form" (ngSubmit)="add()" class="my-videos__form">
+  <mat-form-field appearance="outline">
+    <mat-label>Video URL</mat-label>
+    <input matInput formControlName="url" />
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="my-videos__description">
+    <mat-label>Description</mat-label>
+    <input matInput formControlName="description" />
+  </mat-form-field>
+  <button mat-flat-button type="submit" [disabled]="form.invalid || saving()">Add video</button>
+</form>
+
+@if (loading()) {
+  <app-loading-spinner></app-loading-spinner>
+} @else if (videos().length === 0) {
+  <p>No videos yet.</p>
+} @else {
+  <div class="my-videos__grid">
+    @for (video of videos(); track video.id) {
+      <mat-card appearance="outlined">
+        <mat-card-content>
+          <a [href]="video.url" target="_blank" rel="noopener">{{ video.url }}</a>
+          <p>{{ video.description }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-icon-button (click)="remove(video)" aria-label="Delete video">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    }
+  </div>
+}
