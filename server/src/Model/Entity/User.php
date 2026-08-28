@@ -68,6 +68,11 @@ use Symfony\Component\Validator\Constraints as Assert;
     normalizationContext: ['groups' => ['user:default:read']],
     security: "is_granted('ROLE_ADMIN')"
 )]
+#[GetCollection(
+    uriTemplate: '/user/search',
+    normalizationContext: ['groups' => ['user:public:read']],
+    security: "is_granted('PUBLIC_ACCESS')",
+)]
 #[Patch(
     uriTemplate: '/user/{userId}',
     uriVariables: [

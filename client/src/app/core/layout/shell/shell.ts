@@ -44,6 +44,7 @@ export class Shell {
   protected readonly navLinks: NavLink[] = [
     { label: 'Matches', path: '/matches', icon: 'event' },
     { label: 'Clubs', path: '/clubs', icon: 'groups' },
+    { label: 'Shooters', path: '/shooters', icon: 'person_search' },
     { label: 'Scores', path: '/scores', icon: 'leaderboard' },
   ];
 

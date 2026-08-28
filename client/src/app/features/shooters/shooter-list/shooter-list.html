@@ -1,0 +1,34 @@
+<h1>Shooters</h1>
+
+<div class="shooter-list__filters">
+  <mat-form-field appearance="outline">
+    <mat-label>Search</mat-label>
+    <input
+      matInput
+      [ngModel]="search()"
+      (ngModelChange)="search.set($event)"
+      placeholder="Name or username"
+    />
+  </mat-form-field>
+</div>
+
+@if (loading()) {
+  <app-loading-spinner></app-loading-spinner>
+} @else if (error()) {
+  <app-error-message [error]="error()!"></app-error-message>
+} @else if (filtered().length === 0) {
+  <p>No shooters found.</p>
+} @else {
+  <div class="shooter-list__grid">
+    @for (s of filtered(); track s.id) {
+      <a [routerLink]="[s.id]" class="shooter-card-link">
+        <mat-card appearance="outlined" class="shooter-card">
+          <mat-card-header>
+            <mat-card-title>{{ s.firstName }} {{ s.lastName }}</mat-card-title>
+            <mat-card-subtitle>&#64;{{ s.username }}</mat-card-subtitle>
+          </mat-card-header>
+        </mat-card>
+      </a>
+    }
+  </div>
+}

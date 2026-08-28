@@ -41,6 +41,7 @@ security:
          - { path: ^/login, roles: PUBLIC, methods: [POST]}
          - { path: ^/docs, roles: PUBLIC_ACCESS }
          - { path: ^/user/register, roles: PUBLIC_ACCESS }
+         - { path: ^/user/search$, roles: PUBLIC_ACCESS, methods: [GET] }
          - { path: ^/user/[a-zA-Z0-9-]+/email/verify$, roles: PUBLIC_ACCESS }
          - { path: ^/user/[a-zA-Z0-9-]+/email/verify/send$, roles: PUBLIC_ACCESS }
          - { path: ^/user/[a-zA-Z0-9-]+/password/reset$, roles: PUBLIC_ACCESS }

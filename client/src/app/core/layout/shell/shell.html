@@ -5,6 +5,7 @@
     [mode]="isHandset() ? 'over' : 'side'"
     [opened]="!isHandset()"
   >
+    <a routerLink="/" class="shell__brand">PractiScore</a>
     <mat-nav-list>
       @for (link of navLinks; track link.path) {
         <a
@@ -39,7 +40,6 @@
           <mat-icon>menu</mat-icon>
         </button>
       }
-      <a routerLink="/" class="shell__brand">PractiScore</a>
       <span class="shell__spacer"></span>
       @if (auth.isAuthenticated()) {
         <span class="shell__username">{{ auth.currentUser()?.username }}</span>
